@@ -8,18 +8,16 @@
 
 #include <string>
 
-class Structure
+class TiXmlElement;
+
+struct Structure
 {
-	mutable std::string mType;
-	mutable std::string mName;
+	TiXmlElement* element;
+	std::string type;
+	std::string name;
 
-public:
-
-	const std::string& getType() const;
-	const std::string& getName() const;
-
-	void reset( const std::string& pKind );
-	void setName( const std::string& pName );
+	Structure();
+	Structure( TiXmlElement* pElement, const std::string& pType, const std::string& pName );
 };
 
 #endif

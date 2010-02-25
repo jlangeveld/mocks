@@ -14,37 +14,14 @@
 
 #include "Structure.hpp"
 
-#include <loki/SafeFormat.h>
+// *tors
 
-using Loki::Printf;
+Structure::Structure()
+	: element( 0 )
+{}
 
-// members
-
-const std::string& Structure::getType() const
-{
-	return mType;
-}
-
-const std::string& Structure::getName() const
-{
-	return mName;
-}
-
-void Structure::reset( const std::string& pKind )
-{
-	if ( "struct" == pKind || "class" == pKind )
-	{
-		mType = pKind;
-	}
-	else
-	{
-		mType.clear();
-	}
-
-	mName.clear();
-}
-
-void Structure::setName( const std::string& pName )
-{
-	mName = pName;
-}
+Structure::Structure( TiXmlElement* pElement, const std::string& pType, const std::string& pName )
+	: element( pElement )
+	, type( pType )
+	, name( pName )
+{}

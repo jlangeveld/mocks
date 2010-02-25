@@ -18,33 +18,14 @@
 #include <string>
 
 #include <loki/SafeFormat.h>
+#include <tinyxml/tinyxml.h>
 
 using Loki::Printf;
 using std::string;
 
 namespace
 {
-
-typedef std::map< std::string, std::string > AttributeMap;
-
-struct ElementParser
-{
-
-	ElementParser();
-	~ElementParser();
-
-};
-
-void parseAttribute( const TiXmlAttribute* pAttribute, AttributeMap& pAttribs )
-{
-	if ( !pAttribute )
-	{
-		return;
-	}
-	pAttribs[ pAttribute->Name() ] = pAttribute->Value();
-	parseAttribute( pAttribute->Next(), pAttribs );
-}
-
+const std::string COMPOUND_TAG = "compound";
 }
 
 // *tors
@@ -56,8 +37,7 @@ void parseAttribute( const TiXmlAttribute* pAttribute, AttributeMap& pAttribs )
  ** Eerste versie.
  ***************/
 IndexParser::IndexParser()
-{
-}
+{}
 
 /** Default destructor.
  **
@@ -69,55 +49,29 @@ IndexParser::~IndexParser()
 
 // members
 
-void IndexParser::enterElement( const TiXmlElement& pElement, const TiXmlAttribute* pAttribute )
+Structure IndexParser::findNextStructure( TiXmlElement* pElement )
 {
-	const string elemValue = pElement.Value();
-}
-
-void IndexParser::parseDocument( TiXmlDocument& pIndex )
-{
-	pIndex.Accept( this );
-}
-
-void IndexParser::parseCompoundElement( const TiXmlElement& pElement, const TiXmlAttribute* pAttribute )
-{
-	AttributeMap attribs;
-	parseAttribute( pAttribute, attribs );
-	mCurrentStructure.reset( attribs[ "kind" ] );
-}
-
-void IndexParser::parseNameElement( const TiXmlElement& pElement, const TiXmlAttribute* pAttribute )
-{
-// 	mCurrentStructure.setName(  )
-}
-
-bool IndexParser::VisitEnter( const TiXmlElement& pElement, const TiXmlAttribute* pAttribute )
-{
-	this->enterElement( pElement, pAttribute );
-
-	const string elemValue = pElement.Value();
-
-// 	parseCompoundElement( pElement, pAttribute );
-// 	parseNameElement( pElement, pAttribute );
-
-	if ( !mCurrentStructure.getType().empty() )
+	if ( pElement == 0 )
 	{
-		Printf( "--- %s %s ---" ) ( mCurrentStructure.getType() ) ( mCurrentStructure.getName() );
+		return Structure();
 	}
-	return mLister.VisitEnter( pElement, pAttribute );
-}
 
-bool IndexParser::VisitExit( const TiXmlElement& pElement )
-{
-	if ( !mCurrentStructure.getType().empty() )
+	const string kind = pElement->Attribute( "kind" );
+	if ( kind != "class" && kind != "struct" )
 	{
-		Printf( "--- %s %s ---" ) ( mCurrentStructure.getType() ) ( mCurrentStructure.getName() );
-		mParsedStructures.push_back( mCurrentStructure );
+		return this->findNextStructure( pElement->NextSiblingElement( COMPOUND_TAG ) );
 	}
-	return mLister.VisitExit( pElement );
+
+	return Structure( pElement->NextSiblingElement( COMPOUND_TAG ), kind, this->findName( pElement ) );
 }
 
-bool IndexParser::Visit( const TiXmlText& pText )
+Structure IndexParser::findStructure( TiXmlDocument& pIndex )
 {
-	return mLister.Visit( pText );
+	TiXmlElement* elem = pIndex.RootElement()->FirstChildElement( COMPOUND_TAG );
+	return findNextStructure( elem );
+}
+
+Structure IndexParser::findStructure( const Structure& pPreviousStructure )
+{
+	return this->findNextStructure( pPreviousStructure.element );
 }

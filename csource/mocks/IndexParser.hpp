@@ -6,37 +6,25 @@
 #ifndef __INDEXPARSER_HPP__
 #define __INDEXPARSER_HPP__
 
-#include "StructLister.hpp"
 #include "Structure.hpp"
+#include "XmlParser.hpp"
 
-#include <string>
 #include <vector>
 
-#include <tinyxml/tinyxml.h>
+class TiXmlDocument;
 
 class IndexParser
-: public TiXmlVisitor
+	: public XmlParser
 {
 public:
-	mutable std::vector< Structure > mParsedStructures;
-
 	IndexParser();
 	~IndexParser();
 
-	void parseDocument( TiXmlDocument& pIndex );
-
-	virtual bool VisitEnter( const TiXmlElement& pElement, const TiXmlAttribute* pAttribute );
-	virtual bool VisitExit( const TiXmlElement& pElement );
-	virtual bool Visit( const TiXmlText& pText );
+	Structure findStructure( TiXmlDocument& pIndex );
+	Structure findStructure( const Structure& pPreviousStructure );
 
 private:
-	Structure mCurrentStructure;
-	StructLister mLister;
-
-	void enterElement( const TiXmlElement& pElement, const TiXmlAttribute* pAttribute );
-	void parseCompoundElement( const TiXmlElement& pElement, const TiXmlAttribute* pAttribute );
-	void parseNameElement( const TiXmlElement& pElement, const TiXmlAttribute* pAttribute );
-
+	Structure findNextStructure( TiXmlElement* pElement );
 };
 
 #endif

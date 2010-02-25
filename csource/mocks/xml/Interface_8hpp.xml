@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="build_163">
+  <compounddef id="Interface_8hpp" kind="file">
+    <compoundname>Interface.hpp</compoundname>
+    <innerclass refid="structInterface" prot="public">Interface</innerclass>
+    <briefdescription>
+<para>&quot;$Id$&quot; </para>    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/home/j.langeveld/test_MOCKS/Interface.hpp"/>
+  </compounddef>
+</doxygen>

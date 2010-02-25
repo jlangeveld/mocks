@@ -1,0 +1,37 @@
+###################
+# IzBo make-file
+###################
+
+outfile=dummy
+final_target=./dummy
+
+include $(subst !,/,$(subst !/,!,$(dir $(subst csource,/,$(subst /,!,$(PWD))))))csource/makedir/basedirinc.mak
+
+include $(MAKEDIR)/izcolors.mak
+
+CC = nice -5 gcc
+CP = nice -5 g++
+comp_flags = -O0 -c -felide-constructors -Wall
+
+cobjects = $(patsubst %.c,%.o,$(wildcard *.c))
+cppobjects = $(patsubst %.cpp,%.o,$(wildcard *.cpp))
+objects = $(cobjects) $(cppobjects)
+
+cheaders = $(wildcard *.h)
+cppheaders = $(wildcard *.hpp)
+headers = $(cheaders) $(cppheaders)
+
+path_includes = -I$(BASEDIR)/includecc/ -I/usr/include/mysql/ -I/usr/include/loki -I/usr/include/boost 
+
+prepare_headers: $(cppheaders)
+	@printf "$c----- ... hernoemen ... -----$e"
+	@rename .hpp .hpp.cpp $(cppheaders)
+	@printf "$c----- ... opnieuw kopieren ... -----$e"
+	@cp -l $(addprefix ../,$(patsubst %.hpp.cpp,%.hpp,$(cppheaders))) .
+
+compile: $(cppobjects)
+	@printf "$c----- klaar. -----$e"
+
+%.o:%.cpp
+	@printf "$i----- compile $< -----$e"
+	@$(CP) -o $@ $(comp_flags) $< $(path_includes)

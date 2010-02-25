@@ -1,0 +1,8 @@
+######################################
+# Standaard makefile voor test-applicaties
+######################################
+
+outfile=tddRun
+extra_libraries_pre=-lcppunit ../obj/libTest.a
+
+include $(subst !,/,$(subst !/,!,$(dir $(subst csource,/,$(subst /,!,$(PWD))))))csource/makedir/izcgiinc.mak

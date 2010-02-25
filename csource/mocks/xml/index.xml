@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygenindex xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="index.xsd" version="build_163">
+  <compound refid="classBeer" kind="class"><name>Beer</name>
+    <member refid="classBeer_1a8e9d6a84945a534e6e2edb8b706c755c" kind="function"><name>Beer</name></member>
+    <member refid="classBeer_1a05257e47fbb8c421015b55c9be82a13e" kind="function"><name>~Beer</name></member>
+    <member refid="classBeer_1a19d5b992fdd137a73d0d8c02ee4f7c74" kind="function"><name>go</name></member>
+  </compound>
+  <compound refid="structInterface" kind="struct"><name>Interface</name>
+    <member refid="structInterface_1a096346192e5d8ed2fd232c47a10fe75f" kind="function"><name>~Interface</name></member>
+    <member refid="structInterface_1ae080accc40dea4ff24a8a0c6d932de88" kind="function"><name>do</name></member>
+  </compound>
+  <compound refid="Interface_8hpp" kind="file"><name>Interface.hpp</name>
+  </compound>
+  <compound refid="main_8cpp" kind="file"><name>main.cpp</name>
+    <member refid="main_8cpp_1a3c04138a5bfe5d72780bb7e82a18e627" kind="function"><name>main</name></member>
+  </compound>
+  <compound refid="Otherface_8cpp" kind="file"><name>Otherface.cpp</name>
+  </compound>
+  <compound refid="Otherface_8hpp" kind="file"><name>Otherface.hpp</name>
+  </compound>
+</doxygenindex>

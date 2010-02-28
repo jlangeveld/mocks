@@ -13,6 +13,7 @@
  ***************/
 
 #include "IndexParser.hpp"
+#include "tagnames.hpp"
 
 #include <map>
 #include <string>
@@ -22,11 +23,6 @@
 
 using Loki::Printf;
 using std::string;
-
-namespace
-{
-const std::string COMPOUND_TAG = "compound";
-}
 
 // *tors
 
@@ -59,10 +55,14 @@ Structure IndexParser::findNextStructure( TiXmlElement* pElement )
 	const string kind = pElement->Attribute( "kind" );
 	if ( kind != "class" && kind != "struct" )
 	{
+		const string name = this->findName( pElement );
+		mIgnorelist.push_back( name );
+		Printf( "Ignoring %s '%s'\n" ) ( kind ) ( name );
 		return this->findNextStructure( pElement->NextSiblingElement( COMPOUND_TAG ) );
 	}
 
-	return Structure( pElement->NextSiblingElement( COMPOUND_TAG ), kind, this->findName( pElement ) );
+	const string structName = this->findName( pElement );
+	return Structure( pElement->NextSiblingElement( COMPOUND_TAG ), kind, structName );
 }
 
 Structure IndexParser::findStructure( TiXmlDocument& pIndex )

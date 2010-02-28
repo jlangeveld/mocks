@@ -1,8 +1,10 @@
 ################################
 # GCC version
 ################################
-CP = nice -5 g++44
-LINK = nice -5 g++44
+CP = nice -5 g++
+LINK = nice -5 g++
+#CP = nice -5 g++44
+#LINK = nice -5 g++44
 
 ifeq ($(override_path_includes),)
 path_includes = -I./ -I$(BUILDREF)/includecc/ -I/usr/include/mysql/ $(loki_include) $(boost_include) $(extra_includes) $(botan_include) $(mockpp_include) $(tinyxml_include) $(izsane_include) $(curl_include) $(cgicc_include)
@@ -31,7 +33,7 @@ endif
 # BOOST version
 ################################
 ifeq ("$(IZ_BOOST_VERSION)","")
-IZ_BOOST_VERSION=1_42_0
+IZ_BOOST_VERSION=1_42
 endif
 
 # alleen de gebruikte libs worden meegelinkt; er zijn er nog (veel) meer...

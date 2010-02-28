@@ -3,49 +3,29 @@
 *** @brief "$Id$"
 **/
 
-#include "IndexParser.hpp"
-#include "Interface.hpp"
-#include "Otherface.hpp"
-#include "StructureParser.hpp"
-
-#include <string>
+#include "SettingsParser.hpp"
+#include "interface/Interface.hpp"
+#include "BasicOtherface.hpp"
 
 #include <boost/foreach.hpp>
-#include <boost/algorithm/string/join.hpp>
 #include <loki/SafeFormat.h>
 #include <tinyxml/tinyxml.h>
 
 using Loki::Printf;
-using std::string;
 
-void printValues( const std::vector< std::string >& pValues )
+void parseParent( const std::string& pFilename )
 {
-	BOOST_FOREACH( string i, pValues )
-	{
-		Printf( " %s\n" ) ( i );
-	}
-}
 
-void parseStructure( const Structure& pStruct )
-{
-	StructureParser sp( pStruct );
-	sp.parseStruct();
-	Printf( " virtuals: '%s'\n" ) ( boost::join( sp.virtualMembers, "," ) );
 }
 
 int main( int argc, char** argv )
 {
-	typedef std::vector< Structure >::const_iterator Iter;
-
-	TiXmlDocument doc( "./xml/index.xml" );
-	doc.LoadFile();
-
-	IndexParser parser;
-	Structure theStruct = parser.findStructure( doc );
-	while ( theStruct.element )
+	SettingsParser setp;
+	while ( setp.findMock() )
 	{
-		Printf( "type %s name %s;\n" ) ( theStruct.type ) ( theStruct.name );
-		parseStructure( theStruct );
-		theStruct = parser.findStructure( theStruct );
+		Printf( "mock '%s'\n" ) ( setp.mockName() );
+		MemberCollector col;
+//		MockParser mp( i );
+//		parseParent( mp.parent, col );
 	}
 }

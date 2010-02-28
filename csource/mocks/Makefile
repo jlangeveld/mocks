@@ -20,3 +20,23 @@ majorversion=1
 minorversion=0
 
 include $(MAKEDIR)/izcgiinc.mak
+
+MOCKDIR=.mocks
+MOCK_FILES = $(wildcard Mock*.hpp)
+MOCKS=$(addprefix $(MOCKDIR)/,$(patsubst Mock%.hpp,%.hpp,$(MOCK_FILES)))
+
+
+#mocks: $(MOCKDIR) $(MOCKDIR)/Interface.hpp mock_xml
+mocks: clean_mocks $(MOCKDIR) $(MOCKS) mock_xml
+
+clean_mocks:
+	rm -rf $(MOCKDIR) mock_xml
+
+mock_xml:
+	doxygen
+
+$(MOCKDIR):
+	mkdir -p $(MOCKDIR)
+
+$(MOCKDIR)/%.hpp:Mock%.hpp
+	gcc -E -P $< -o $@

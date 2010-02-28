@@ -24,6 +24,8 @@ public:
 	Structure findStructure( const Structure& pPreviousStructure );
 
 private:
+	std::vector< std::string > mIgnorelist;
+
 	Structure findNextStructure( TiXmlElement* pElement );
 };
 

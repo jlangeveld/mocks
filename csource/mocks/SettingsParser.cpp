@@ -28,8 +28,7 @@ using Loki::Printf;
  ** Eerste versie.
  ***************/
 SettingsParser::SettingsParser()
-: XmlParser( "./mock_xml/namespacemock__generator__settings.xml" )
-, mCurrent( 0 )
+: XmlParser( XMLPATH + "namespacemock__generator__settings.xml" )
 {}
 
 /** Default destructor.
@@ -44,7 +43,7 @@ SettingsParser::~SettingsParser()
 
 TiXmlElement* SettingsParser::findNamespace( TiXmlElement* element )
 {
-	while ( element != 0 && NAMESPACE_ATTRIB != element->Attribute( KIND_ATTRIB_NAME.c_str() ) )
+	while ( element != 0 && NAMESPACE_ATTRIB != element->Attribute( KIND_ATTRIB.c_str() ) )
 	{
 		element = element->NextSiblingElement( COMPOUND_TAG );
 	}
@@ -69,7 +68,12 @@ bool SettingsParser::findMock()
 	return ( mCurrent != 0 );
 }
 
-std::string SettingsParser::mockName()
+std::string SettingsParser::mockName() const
 {
 	return mCurrent->GetText();
+}
+
+std::string SettingsParser::mockRefID() const
+{
+	return mCurrent->Attribute( REFID_ATTRIB.c_str() );
 }

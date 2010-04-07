@@ -6,18 +6,23 @@
 #ifndef __STRUCTURE_HPP__
 #define __STRUCTURE_HPP__
 
+#include "Mocker.hpp"
+#include "Parent.hpp"
+
 #include <string>
+#include <vector>
 
-class TiXmlElement;
-
-struct Structure
+class Structure
 {
-	TiXmlElement* element;
-	std::string type;
-	std::string name;
+public:
+	Structure( const std::string& pName );
 
-	Structure();
-	Structure( TiXmlElement* pElement, const std::string& pType, const std::string& pName );
+	void addParent( const std::string& pName, const std::string& pRefID, const std::string& pVisibility );
+
+private:
+	const std::string mName;
+	std::vector< Parent > mParentRefIDs;
+
 };
 
 #endif

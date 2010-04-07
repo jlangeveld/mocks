@@ -22,15 +22,18 @@ using Loki::Printf;
 // * tors
 
 XmlParser::XmlParser()
+: mCurrent( 0 )
 {}
 
 XmlParser::XmlParser( const std::string& pFilename )
 : mDoc( pFilename )
+, mCurrent( 0 )
 {
+	Printf( "+ Parsing file '%s'.\n" ) ( pFilename );
 	mDoc.LoadFile();
 	if ( mDoc.Error() )
 	{
-		Printf( "Fout bij het laden van het document: '%s'" ) ( mDoc.ErrorDesc() );
+		Printf( "Error while loading the document: '%s'.\n" ) ( mDoc.ErrorDesc() );
 	}
 }
 

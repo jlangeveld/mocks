@@ -14,29 +14,10 @@ final_target=./mocks
 # extra_libraries_pre=
 # extra_libraries=
 # extra_defines=
+extra_libraries= -lboost_filesystem-$(IZ_BOOST_VERSION) -lboost_program_options-$(IZ_BOOST_VERSION) -lboost_system-$(IZ_BOOST_VERSION)
 override_libraries=-ltinyxml-2_5_3 -lloki-0_1_7
 
 majorversion=1
 minorversion=0
 
 include $(MAKEDIR)/izcgiinc.mak
-
-MOCKDIR=.mocks
-MOCK_FILES = $(wildcard Mock*.hpp)
-MOCKS=$(addprefix $(MOCKDIR)/,$(patsubst Mock%.hpp,%.hpp,$(MOCK_FILES)))
-
-
-#mocks: $(MOCKDIR) $(MOCKDIR)/Interface.hpp mock_xml
-mocks: clean_mocks $(MOCKDIR) $(MOCKS) mock_xml
-
-clean_mocks:
-	rm -rf $(MOCKDIR) mock_xml
-
-mock_xml:
-	doxygen
-
-$(MOCKDIR):
-	mkdir -p $(MOCKDIR)
-
-$(MOCKDIR)/%.hpp:Mock%.hpp
-	gcc -E -P $< -o $@

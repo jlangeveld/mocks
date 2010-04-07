@@ -20,6 +20,7 @@ public:
 
 protected:
 	TiXmlDocument mDoc;
+	TiXmlElement* mCurrent;
 };
 
 #endif

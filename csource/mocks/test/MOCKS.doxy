@@ -1,0 +1,112 @@
+# Doxyfile 1.6.3
+
+#MOCKDIR_DOXY_SRC=.mocks_doxy
+#MOCKDIR_DOXY_DEST=.mocks_xml
+#MOCKDIR_DOXY_SRC=.mocks_doxy
+#MOCKDIR_DOXY_DEST=.mocks_xml
+
+PROJECT_NAME           = Mock Generator
+INPUT                  = ./.mocks_doxy
+#EXCLUDE_PATTERNS       =
+#EXCLUDE_SYMBOLS        = std:: IzCore*
+EXCLUDE_SYMLINKS       = NO
+OUTPUT_LANGUAGE        = English
+INLINE_INHERITED_MEMB  = NO
+OPTIMIZE_OUTPUT_VHDL   = NO
+BUILTIN_STL_SUPPORT    = YES
+SUBGROUPING            = YES
+SYMBOL_CACHE_SIZE      = 4
+EXTRACT_ALL            = YES
+EXTRACT_PRIVATE        = YES
+EXTRACT_STATIC         = YES
+EXTRACT_LOCAL_CLASSES  = YES
+EXTRACT_LOCAL_METHODS  = YES
+EXTRACT_ANON_NSPACES   = YES
+HIDE_IN_BODY_DOCS      = YES
+HIDE_SCOPE_NAMES       = YES
+SHOW_INCLUDE_FILES     = NO
+FORCE_LOCAL_INCLUDES   = NO
+SHOW_NAMESPACES        = YES
+QUIET                  = YES
+WARN_LOGFILE           = /dev/null
+RECURSIVE              = NO
+SOURCE_BROWSER         = NO
+REFERENCED_BY_RELATION = YES
+REFERENCES_RELATION    = NO
+REFERENCES_LINK_SOURCE = NO
+VERBATIM_HEADERS       = NO
+ALPHABETICAL_INDEX     = NO
+GENERATE_HTML          = NO
+GENERATE_LATEX         = NO
+GENERATE_RTF           = NO
+GENERATE_MAN           = NO
+GENERATE_XML           = YES
+XML_OUTPUT             = .mocks_xml
+GENERATE_PERLMOD       = NO
+
+#---------------------------------------------------------------------------
+# Configuration options related to the preprocessor
+#---------------------------------------------------------------------------
+
+# If the ENABLE_PREPROCESSING tag is set to YES (the default) Doxygen will
+# evaluate all C-preprocessor directives found in the sources and include
+# files.
+
+ENABLE_PREPROCESSING   = YES
+
+# If the MACRO_EXPANSION tag is set to YES Doxygen will expand all macro
+# names in the source code. If set to NO (the default) only conditional
+# compilation will be performed. Macro expansion can be done in a controlled
+# way by setting EXPAND_ONLY_PREDEF to YES.
+
+MACRO_EXPANSION        = YES
+
+# If the EXPAND_ONLY_PREDEF and MACRO_EXPANSION tags are both set to YES
+# then the macro expansion is limited to the macros specified with the
+# PREDEFINED and EXPAND_AS_DEFINED tags.
+
+EXPAND_ONLY_PREDEF     = NO
+
+# If the SEARCH_INCLUDES tag is set to YES (the default) the includes files
+# in the INCLUDE_PATH (see below) will be search if a #include is found.
+
+SEARCH_INCLUDES        = NO
+
+# The INCLUDE_PATH tag can be used to specify one or more directories that
+# contain include files that are not input files but should be processed by
+# the preprocessor.
+
+INCLUDE_PATH           =
+
+# You can use the INCLUDE_FILE_PATTERNS tag to specify one or more wildcard
+# patterns (like *.h and *.hpp) to filter out the header-files in the
+# directories. If left blank, the patterns specified with FILE_PATTERNS will
+# be used.
+
+INCLUDE_FILE_PATTERNS  =
+
+# The PREDEFINED tag can be used to specify one or more macro names that
+# are defined before the preprocessor is started (similar to the -D option of
+# gcc). The argument of the tag is a list of macros of the form: name
+# or name=definition (no spaces). If the definition and the = are
+# omitted =1 is assumed. To prevent a macro definition from being
+# undefined via #undef or recursively expanded use the := operator
+# instead of the = operator.
+
+PREDEFINED             = MOCK_RUN
+
+# If the MACRO_EXPANSION and EXPAND_ONLY_PREDEF tags are set to YES then
+# this tag can be used to specify a list of macro names that should be expanded.
+# The macro definition that is found in the sources will be used.
+# Use the PREDEFINED tag if you want to use a different macro definition.
+
+EXPAND_AS_DEFINED      =
+
+# If the SKIP_FUNCTION_MACROS tag is set to YES (the default) then
+# doxygen's preprocessor will remove all function-like macros that are alone
+# on a line, have an all uppercase name, and do not end with a semicolon. Such
+# function macros are typically used for boiler-plate code, and will confuse
+# the parser if not removed.
+
+SKIP_FUNCTION_MACROS   = YES
+CLASS_DIAGRAMS         = NO

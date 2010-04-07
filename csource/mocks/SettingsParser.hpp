@@ -20,12 +20,11 @@ public:
 
 	bool findMock();
 
-	std::string mockName();
+	std::string mockName() const;
+	std::string mockRefID() const;
 
 protected:
 private:
-	TiXmlElement* mCurrent;
-
 	TiXmlElement* findNamespace( TiXmlElement* pElement );
 	TiXmlElement* findNextMock( TiXmlElement* current );
 };

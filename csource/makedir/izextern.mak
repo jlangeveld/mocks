@@ -1,8 +1,8 @@
 ################################
 # GCC version
 ################################
-CP = nice -5 g++
-LINK = nice -5 g++
+CP = g++
+LINK = g++
 #CP = nice -5 g++44
 #LINK = nice -5 g++44
 
@@ -17,16 +17,24 @@ endif
 COMP_FLAGS = $(extra_defines) $(OPTIMIZE) -c -felide-constructors -Wall $(DEBUGFLAGS) $(PROFILEFLAG) $(extra_compiler_flags)
 LINK_FLAGS = $(LINKSTRIP) $(extra_linker_flags)
 
+ifeq ($(no_libraries),)
 ifeq ($(override_path_libraries),)
 path_libraries = $(BASEDIR)/libcc /usr/local/lib /usr/lib64/mysql
 else
 path_libraries = $(override_path_libraries)
 endif
+else
+path_libraries=
+endif
 
+ifeq ($(no_libraries),)
 ifeq ($(override_libraries),)
 libraries = -lHandtekening -lHttp -lMyTest -lIzToolbox -lIzCgi -lIzCGIBase -lIzKoppelBase -lTemplate -lIzCore -lCGIBase -lMySQL -lActionFactory -lIzActionFactory -lMatrix -lXSort -lStateMachine -lMail -lsocket -lNaslag $(libCrypt) -lLockedLog -lFileManager -lLoglib -lIzInit -lMapEx -lXorB64 -lIniFile -lStringEx -lToolbox -lIzCommandline -lCmdLine $(boost_lib) $(botan_lib) $(mockpp_lib) $(tinyxml_lib) $(loki_lib) $(curl_lib) $(cgicc_lib) -lmysqlclient
 else
 libraries = $(override_libraries)
+endif
+else
+libraries=
 endif
 
 ################################

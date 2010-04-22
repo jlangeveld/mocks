@@ -43,9 +43,9 @@ SettingsParser::~SettingsParser()
 
 TiXmlElement* SettingsParser::findNamespace( TiXmlElement* element )
 {
-	while ( element != 0 && NAMESPACE_ATTRIB != element->Attribute( KIND_ATTRIB.c_str() ) )
+	while ( element != 0 && KIND_NAMESPACE != element->Attribute( ATTRIB_KIND.c_str() ) )
 	{
-		element = element->NextSiblingElement( COMPOUND_TAG );
+		element = element->NextSiblingElement( TAG_COMPOUND );
 	}
 
 	return element;
@@ -55,11 +55,11 @@ TiXmlElement* SettingsParser::findNextMock( TiXmlElement* current )
 {
 	if ( current == 0 )
 	{
-		current = this->findNamespace( mDoc.RootElement()->FirstChildElement( COMPOUNDDEF_TAG ) );
-		return current->FirstChildElement( MOCK_TAG );
+		current = this->findNamespace( mDoc.RootElement()->FirstChildElement( TAG_COMPOUNDDEF ) );
+		return current->FirstChildElement( TAG_MOCK );
 	}
 
-	return current->NextSiblingElement( MOCK_TAG );
+	return current->NextSiblingElement( TAG_MOCK );
 }
 
 bool SettingsParser::findMock()
@@ -75,5 +75,5 @@ std::string SettingsParser::mockName() const
 
 std::string SettingsParser::mockRefID() const
 {
-	return mCurrent->Attribute( REFID_ATTRIB.c_str() );
+	return mCurrent->Attribute( ATTRIB_REFID.c_str() );
 }

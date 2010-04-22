@@ -14,17 +14,17 @@ const std::string XMLPATH = "./.mocks_xml/";
 const std::string YES = "yes";
 const std::string NO = "no";
 
-const std::string COMPOUND_TAG = "compound";
-const std::string COMPOUNDDEF_TAG = "compounddef";
+const std::string TAG_COMPOUND = "compound";
+const std::string TAG_COMPOUNDDEF = "compounddef";
 const std::string TAG_MEMBER = "memberdef";
-const std::string MOCK_TAG = "innerclass";
-const std::string PARENT_TAG = "basecompoundref";
-const std::string SECTION_TAG = "sectiondef";
+const std::string TAG_MOCK = "innerclass";
+const std::string TAG_PARENT = "basecompoundref";
+const std::string TAG_SECTION = "sectiondef";
 
 const std::string ATTRIB_CONST = "const";
-const std::string KIND_ATTRIB = "kind";
-const std::string NAMESPACE_ATTRIB = "namespace";
-const std::string REFID_ATTRIB = "refid";
+const std::string ATTRIB_KIND = "kind";
+const std::string ATTRIB_NAMESPACE = "namespace";
+const std::string ATTRIB_REFID = "refid";
 const std::string ATTRIB_STATIC = "static";
 const std::string ATTRIB_VIRTUAL = "virt";
 const std::string ATTRIB_VISIBILITY = "prot";

@@ -10,6 +10,8 @@ endif
 
 include $(MAKEDIR)/izextern.mak
 
+all: mocks $(localoutfile)
+
 ifeq ($(MAKECMDGOALS),debug)
 DOEDEBUG = debug
 endif
@@ -47,24 +49,62 @@ IMGDIR= ./img/
 WSDLDIR= ./wsdl/
 ELMDIR= ./elm/
 
+mock_files := $(shell grep -l MOCK *.?pp)
+headers = $(wildcard *.hpp)
 cfiles = $(wildcard *.cpp)
 objects = $(addprefix $(OBJDIR),$(patsubst %.cpp,%.o,$(cfiles)))
 deps = $(addprefix $(OBJDIR),$(patsubst %.cpp,%.dep,$(cfiles)))
 tpls = $(wildcard $(TPLDIR)*.tpl)
 imgs = $(wildcard $(IMGDIR)*.tpl)
 
-
 DEPEND = $(OBJDIR)make.depend
-
-headers = $(wildcard *.hpp)
 
 localoutfile=$(OBJDIR)$(outfile)
 
-$(localoutfile):$(objects) $(LIBS)
+$(localoutfile):mocks $(objects) $(LIBS)
 	@printf "$c---- Link $@ ----$e"
 	@$(LINK) $(LINK_FLAGS) $(PROFILEFLAG) $+ -o $@
 
-all: $(localoutfile)
+no_mocks_msg:
+	@echo "-- NO MOCKS"
+
+updir: updir_msg
+	$(MAKE) -C ..
+
+updir_msg:
+	@echo "-- updir"
+
+MOCKDIR=.mocks
+MOCKDIR_DOXY_SRC=.mocks_doxy
+MOCKDIR_DOXY_DEST=.mocks_xml
+
+ifneq ($(mock_files),)
+mocks: mocks_doxy mocks_xml mocks_build mocks_clean
+else
+mocks: no_mocks_msg
+endif
+
+mocks_clean:
+	@echo "-- mocks_clean"
+	rm -rf $(MOCKDIR)
+	rm -rf $(MOCKDIR_DOXY_SRC)
+	rm -rf $(MOCKDIR_DOXY_DEST)
+
+mocks_mkdir:
+	@echo "-- mocks_mkdir"
+	mkdir -p $(MOCKDIR)
+	mkdir -p $(MOCKDIR_DOXY_SRC)
+
+mocks_doxy: updir mocks_clean mocks_mkdir
+	@echo "Generate dependencies for $(mock_files)"
+	$(CP) -D MOCK_RUN -M -MM $(mock_files) $(INCLUDE) | ../obj/mocks --link
+
+mocks_xml:
+	@echo "-- mocks_xml"
+	doxygen MOCKS.doxy
+
+mocks_build:
+	../obj/mocks
 
 show_Basedir:
 	@printf "\n"

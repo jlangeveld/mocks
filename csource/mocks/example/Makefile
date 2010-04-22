@@ -30,7 +30,13 @@ MOCKDIR=.mocks
 MOCKDIR_DOXY_SRC=.mocks_doxy
 MOCKDIR_DOXY_DEST=.mocks_xml
 
+mock_files := $(shell grep -l mock_generator_settings *.?pp)
+
+ifneq ($(mock_files),)
 mocks: mocks_doxy mocks_xml mocks_build mocks_clean
+else
+mocks:
+endif
 
 mocks_clean:
 	rm -rf $(MOCKDIR)
@@ -42,8 +48,8 @@ mocks_mkdir:
 	mkdir -p $(MOCKDIR_DOXY_SRC)
 
 mocks_doxy: updir mocks_clean mocks_mkdir
-	@echo "Generate dependencies for $(cfiles)"
-	$(CP) -M -MM $(cfiles) | ../obj/mocks --link
+	@echo "Generate dependencies for $(mock_files)"
+	$(CP) -D MOCK_RUN -M -MM $(mock_files) $(INCLUDE) | ../obj/mocks --link
 
 mocks_xml:
 	doxygen MOCKS.doxy

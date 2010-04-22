@@ -15,12 +15,14 @@
 #include "StructParser.hpp"
 #include "tagnames.hpp"
 
+#include <string>
 #include <utility>
 
 #include <loki/SafeFormat.h>
 
 using Loki::Printf;
 using std::make_pair;
+using std::string;
 
 // *tors
 
@@ -59,7 +61,7 @@ TiXmlElement* StructParser::findNextMocker( TiXmlElement* pCurrent )
 			? mCompoundDefElement->FirstChildElement( TAG_MEMBER )
 			: pCurrent->NextSiblingElement( TAG_MEMBER ) );
 	}
-	while ( pCurrent && ( pCurrent->Attribute( ATTRIB_STATIC ) == YES || pCurrent->Attribute( ATTRIB_VIRTUAL ) == VIRTUAL_NON ) );
+	while ( pCurrent && ( *( pCurrent->Attribute( ATTRIB_STATIC ) ) == YES || *( pCurrent->Attribute( ATTRIB_VIRTUAL ) ) == VIRTUAL_NON ) );
 	return pCurrent;
 }
 
@@ -67,10 +69,10 @@ TiXmlElement* StructParser::findNextParent( TiXmlElement* pCurrent )
 {
 	if ( pCurrent == 0 )
 	{
-		return mCompoundDefElement->FirstChildElement( PARENT_TAG );
+		return mCompoundDefElement->FirstChildElement( TAG_PARENT );
 	}
 
-	return pCurrent->NextSiblingElement( PARENT_TAG );
+	return pCurrent->NextSiblingElement( TAG_PARENT );
 }
 
 bool StructParser::findParent()
@@ -86,10 +88,10 @@ std::string StructParser::getName()
 
 std::string StructParser::getRefID()
 {
-	return mCurrent->Attribute( REFID_ATTRIB.c_str() );
+	return mCurrent->Attribute( ATTRIB_REFID.c_str() );
 }
 
 std::string StructParser::getVisibility()
 {
-	return mCurrent->Attribute( VISIBILITY_ATTRIB.c_str() );
+	return mCurrent->Attribute( ATTRIB_VISIBILITY.c_str() );
 }

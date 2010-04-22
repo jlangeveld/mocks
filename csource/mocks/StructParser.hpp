@@ -28,6 +28,7 @@ protected:
 private:
 	TiXmlElement* mCompoundDefElement;
 
+	TiXmlElement* findNextMocker( TiXmlElement* pCurrent );
 	TiXmlElement* findNextParent( TiXmlElement* element );
 
 };

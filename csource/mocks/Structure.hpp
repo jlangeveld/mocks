@@ -6,7 +6,7 @@
 #ifndef __STRUCTURE_HPP__
 #define __STRUCTURE_HPP__
 
-#include "Mocker.hpp"
+// #include "Mocker.hpp"
 #include "Parent.hpp"
 
 #include <string>

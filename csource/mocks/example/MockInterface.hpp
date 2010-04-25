@@ -8,6 +8,10 @@
 
 #include "./interface/Interface.hpp"
 
+#define MOCK Interface
+#include <MyMock.hpp>
+
+/*
 namespace mock_generator_settings
 {
 
@@ -16,5 +20,6 @@ struct MockInterface
 {};
 
 }
+*/
 
 #endif

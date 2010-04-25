@@ -10,8 +10,6 @@ endif
 
 include $(MAKEDIR)/izextern.mak
 
-all: mocks $(localoutfile)
-
 ifeq ($(MAKECMDGOALS),debug)
 DOEDEBUG = debug
 endif
@@ -49,7 +47,7 @@ IMGDIR= ./img/
 WSDLDIR= ./wsdl/
 ELMDIR= ./elm/
 
-mock_files := $(shell grep -l MOCK *.?pp)
+mock_files := $(shell grep -l "MyMock.hpp" *.?pp)
 headers = $(wildcard *.hpp)
 cfiles = $(wildcard *.cpp)
 objects = $(addprefix $(OBJDIR),$(patsubst %.cpp,%.o,$(cfiles)))
@@ -61,7 +59,8 @@ DEPEND = $(OBJDIR)make.depend
 
 localoutfile=$(OBJDIR)$(outfile)
 
-$(localoutfile):mocks $(objects) $(LIBS)
+all: mocks $(localoutfile)
+$(localoutfile): $(objects) $(LIBS)
 	@printf "$c---- Link $@ ----$e"
 	@$(LINK) $(LINK_FLAGS) $(PROFILEFLAG) $+ -o $@
 
@@ -95,7 +94,7 @@ mocks_mkdir:
 	mkdir -p $(MOCKDIR)
 	mkdir -p $(MOCKDIR_DOXY_SRC)
 
-mocks_doxy: updir mocks_clean mocks_mkdir
+mocks_doxy: mocks_clean mocks_mkdir
 	@echo "Generate dependencies for $(mock_files)"
 	$(CP) -D MOCK_RUN -M -MM $(mock_files) $(INCLUDE) | ../obj/mocks --link
 
@@ -145,13 +144,13 @@ profile: $(localoutfile)
 
 install: $(localoutfile) script cron conf style tpl img html xml xsd elmstd elmxml elmimg elmdec elmshow
 	@printf "$c---- Install $< ----$e"
-	@izinstall -d $(dir $(final_target))
-	@izinstall $(chgrp_option) -m 775 $(localoutfile) $(final_target)
+	@install -d $(dir $(final_target))
+	@install $(chgrp_option) -m 775 $(localoutfile) $(final_target)
 
 install_alt: $(localoutfile) tpl_alt img_alt script_alt cron_alt conf_alt style_alt html_alt xml_alt xsd_alt elmstd_alt elmxml_alt elmimg_alt elmdec_alt elmshow_alt
 	@printf "$c---- Install $< ----$e"
-	@izinstall -d $(dir $(final_target))
-	@izinstall $(chgrp_option) -m 775 $(localoutfile) $(final_target)
+	@install -d $(dir $(final_target))
+	@install $(chgrp_option) -m 775 $(localoutfile) $(final_target)
 
 
 applib : $(objects) tpl

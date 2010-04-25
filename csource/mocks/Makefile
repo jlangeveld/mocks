@@ -8,7 +8,7 @@ TMPHOME=/$(subst $(SPACE),/,$(strip $(subst /, ,$(HOME))))
 include $(TMPHOME)/$(word 1, $(subst /, , $(subst $(TMPHOME)/,,$(PWD))))/csource/makedir/basedirinc.mak
 
 outfile=mocks
-final_target=./mocks
+final_target=~/bin/mocks
 
 # hebben we nog extra libs nodig ? geef dan hier op
 # extra_libraries_pre=

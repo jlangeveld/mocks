@@ -193,15 +193,15 @@ chgrp_name_alt = intrazis
 endif
 
 ifneq ($(chgrp_name),)
-chgrp_option = -g $(chgrp_name)
+chgrp_option = -g $(chgrp_name) -o $(USER)
 endif
 
 .tpl: $(tpl_files)
 ifneq ($(tpl_dir),)
 ifneq ($(tpl_files),)
 	@printf "$c---- Install Template $< ----$e"
-	izinstall -d $(chgrp_option) -m 775 $(tardir_prefix)$(tpl_dir)
-	izinstall $(chgrp_option) -m 775 $^ $(tardir_prefix)$(tpl_dir)
+	install -d $(chgrp_option) -m 775 $(tardir_prefix)$(tpl_dir)
+	install $(chgrp_option) -m 775 $^ $(tardir_prefix)$(tpl_dir)
 endif
 endif
 
@@ -209,8 +209,8 @@ tpl_alt: $(tpl_files)
 ifneq ($(tpl_dir_alt),)
 ifneq ($(tpl_files),)
 	@printf "$c---- Install Template $< ----$e"
-	@izinstall -d $(chgrp_option) -m 775 $(tardir_prefix)$(tpl_dir)
-	@izinstall $(chgrp_option) -m 775 $^ $(tardir_prefix)$(tpl_dir_alt)
+	@install -d $(chgrp_option) -m 775 $(tardir_prefix)$(tpl_dir)
+	@install $(chgrp_option) -m 775 $^ $(tardir_prefix)$(tpl_dir_alt)
 endif
 endif
 
@@ -218,8 +218,8 @@ endif
 ifneq ($(img_dir),)
 ifneq ($(img_files),)
 	@printf "$c---- Install Image $< ----$e"
-	@izinstall -d $(chgrp_option) -m 775 $(tardir_prefix)$(img_dir)
-	@izinstall $(chgrp_option) -m 775 $^ $(tardir_prefix)$(img_dir)
+	@install -d $(chgrp_option) -m 775 $(tardir_prefix)$(img_dir)
+	@install $(chgrp_option) -m 775 $^ $(tardir_prefix)$(img_dir)
 endif
 endif
 
@@ -227,8 +227,8 @@ img_alt: $(img_files)
 ifneq ($(img_dir_alt),)
 ifneq ($(img_files),)
 	@printf "$c---- Install Image $< ----$e"
-	@izinstall -d $(chgrp_option) -m 775 $(tardir_prefix)$(img_dir_alt)
-	@izinstall $(chgrp_option) -m 775 $^ $(tardir_prefix)$(img_dir_alt)
+	@install -d $(chgrp_option) -m 775 $(tardir_prefix)$(img_dir_alt)
+	@install $(chgrp_option) -m 775 $^ $(tardir_prefix)$(img_dir_alt)
 endif
 endif
 
@@ -246,8 +246,8 @@ script_alt: $(script_files)
 ifneq ($(script_dir_alt),)
 ifneq ($(script_files),)
 	@printf "$c---- Install Script $< ----$e"
-	@izinstall -d $(chgrp_option) -m 775 $(tardir_prefix)$(script_dir_alt)
-	@izinstall $(chgrp_option) -m 775 $^ $(tardir_prefix)$(script_dir_alt)
+	@install -d $(chgrp_option) -m 775 $(tardir_prefix)$(script_dir_alt)
+	@install $(chgrp_option) -m 775 $^ $(tardir_prefix)$(script_dir_alt)
 endif
 endif
 
@@ -265,8 +265,8 @@ cron_alt: $(cron_files)
 ifneq ($(cron_dir_alt),)
 ifneq ($(cron_files),)
 	@printf "$c---- Install cron $< ----$e"
-	@izinstall -d $(chgrp_option) -m 775 $(tardir_prefix)$(cron_dir_alt)
-	@izinstall $(chgrp_option) -m 775 $^ $(tardir_prefix)$(cron_dir_alt)
+	@install -d $(chgrp_option) -m 775 $(tardir_prefix)$(cron_dir_alt)
+	@install $(chgrp_option) -m 775 $^ $(tardir_prefix)$(cron_dir_alt)
 endif
 endif
 
@@ -284,8 +284,8 @@ conf_alt: $(conf_files)
 ifneq ($(conf_dir_alt),)
 ifneq ($(conf_files),)
 	@printf "$c---- Install conf $< ----$e"
-	@izinstall -d $(chgrp_option) -m 775 $(tardir_prefix)$(conf_dir_alt)
-	@izinstall $(chgrp_option) -m 775 $^ $(tardir_prefix)$(conf_dir_alt)
+	@install -d $(chgrp_option) -m 775 $(tardir_prefix)$(conf_dir_alt)
+	@install $(chgrp_option) -m 775 $^ $(tardir_prefix)$(conf_dir_alt)
 endif
 endif
 
@@ -293,8 +293,8 @@ endif
 ifneq ($(style_dir),)
 ifneq ($(style_files),)
 	@printf "$c---- Install Style $< ----$e"
-	@izinstall -d $(chgrp_option) -m 775 $(tardir_prefix)$(style_dir)
-	@izinstall $(chgrp_option) -m 775 $^ $(tardir_prefix)$(style_dir)
+	@install -d $(chgrp_option) -m 775 $(tardir_prefix)$(style_dir)
+	@install $(chgrp_option) -m 775 $^ $(tardir_prefix)$(style_dir)
 endif
 endif
 
@@ -302,8 +302,8 @@ style_alt: $(style_files)
 ifneq ($(style_dir_alt),)
 ifneq ($(style_files),)
 	@printf "$c---- Install Style $< ----$e"
-	@izinstall -d $(chgrp_option) -m 775 $(tardir_prefix)$(style_dir_alt)
-	@izinstall $(chgrp_option) -m 775 $^ $(tardir_prefix)$(style_dir_alt)
+	@install -d $(chgrp_option) -m 775 $(tardir_prefix)$(style_dir_alt)
+	@install $(chgrp_option) -m 775 $^ $(tardir_prefix)$(style_dir_alt)
 endif
 endif
 
@@ -311,8 +311,8 @@ endif
 ifneq ($(html_dir),)
 ifneq ($(html_files),)
 	@printf "$c---- Install Html Document $< ----$e"
-	@izinstall -d $(chgrp_option) -m 775 $(tardir_prefix)$(html_dir)
-	@izinstall -p $(chgrp_option) -m 775 $^ $(tardir_prefix)$(html_dir)
+	@install -d $(chgrp_option) -m 775 $(tardir_prefix)$(html_dir)
+	@install -p $(chgrp_option) -m 775 $^ $(tardir_prefix)$(html_dir)
 endif
 endif
 
@@ -320,8 +320,8 @@ html_alt: $(html_files)
 ifneq ($(html_dir_alt),)
 ifneq ($(html_files),)
 	@printf "$c---- Install Html Document $< ----$e"
-	@izinstall -d $(chgrp_option) -m 775 $(tardir_prefix)$(html_dir_alt)
-	@izinstall -p $(chgrp_option) -m 775 $^ $(tardir_prefix)$(html_dir_alt)
+	@install -d $(chgrp_option) -m 775 $(tardir_prefix)$(html_dir_alt)
+	@install -p $(chgrp_option) -m 775 $^ $(tardir_prefix)$(html_dir_alt)
 endif
 endif
 
@@ -329,8 +329,8 @@ endif
 ifneq ($(xml_dir),)
 ifneq ($(xml_files),)
 	@printf "$c---- Install Xml Document $< ----$e"
-	@izinstall -d $(chgrp_option) -m 775 $(tardir_prefix)$(xml_dir)
-	@izinstall $(chgrp_option) -m 775 $^ $(tardir_prefix)$(xml_dir)
+	@install -d $(chgrp_option) -m 775 $(tardir_prefix)$(xml_dir)
+	@install $(chgrp_option) -m 775 $^ $(tardir_prefix)$(xml_dir)
 endif
 endif
 
@@ -338,8 +338,8 @@ xml_alt: $(xml_files)
 ifneq ($(xml_dir_alt),)
 ifneq ($(xml_files),)
 	@printf "$c---- Install Xml Document $< ----$e"
-	@izinstall -d $(chgrp_option) -m 775 $(tardir_prefix)$(xml_dir_alt)
-	@izinstall $(chgrp_option) -m 775 $^ $(tardir_prefix)$(xml_dir_alt)
+	@install -d $(chgrp_option) -m 775 $(tardir_prefix)$(xml_dir_alt)
+	@install $(chgrp_option) -m 775 $^ $(tardir_prefix)$(xml_dir_alt)
 endif
 endif
 
@@ -347,8 +347,8 @@ endif
 ifneq ($(xsd_dir),)
 ifneq ($(xsd_files),)
 	@printf "$c---- Install Xsd Document $< ----$e"
-	@izinstall -d $(chgrp_option) -m 775 $(tardir_prefix)$(xsd_dir)
-	@izinstall $(chgrp_option) -m 775 $^ $(tardir_prefix)$(xsd_dir)
+	@install -d $(chgrp_option) -m 775 $(tardir_prefix)$(xsd_dir)
+	@install $(chgrp_option) -m 775 $^ $(tardir_prefix)$(xsd_dir)
 endif
 endif
 
@@ -356,8 +356,8 @@ xsd_alt: $(xsd_files)
 ifneq ($(xsd_dir_alt),)
 ifneq ($(xsd_files),)
 	@printf "$c---- Install Xsd Document $< ----$e"
-	@izinstall -d $(chgrp_option) -m 775 $(tardir_prefix)$(xsd_dir_alt)
-	@izinstall $(chgrp_option) -m 775 $^ $(tardir_prefix)$(xsd_dir_alt)
+	@install -d $(chgrp_option) -m 775 $(tardir_prefix)$(xsd_dir_alt)
+	@install $(chgrp_option) -m 775 $^ $(tardir_prefix)$(xsd_dir_alt)
 endif
 endif
 
@@ -365,8 +365,8 @@ endif
 ifneq ($(wsdl_dir),)
 ifneq ($(wsdl_files),)
 	@printf "$c---- Install Wsdl Document $< ----$e"
-	@izinstall -d $(chgrp_option) -m 775 $(tardir_prefix)$(wsdl_dir)
-	@izinstall $(chgrp_option) -m 775 $^ $(tardir_prefix)$(wsdl_dir)
+	@install -d $(chgrp_option) -m 775 $(tardir_prefix)$(wsdl_dir)
+	@install $(chgrp_option) -m 775 $^ $(tardir_prefix)$(wsdl_dir)
 endif
 endif
 
@@ -374,8 +374,8 @@ wsdl_alt: $(wsdl_files)
 ifneq ($(wsdl_dir_alt),)
 ifneq ($(wsdl_files),)
 	@printf "$c---- Install Wsdl Document $< ----$e"
-	@izinstall -d $(chgrp_option) -m 775 $(tardir_prefix)$(wsdl_dir_alt)
-	@izinstall $(chgrp_option) -m 775 $^ $(tardir_prefix)$(wsdl_dir_alt)
+	@install -d $(chgrp_option) -m 775 $(tardir_prefix)$(wsdl_dir_alt)
+	@install $(chgrp_option) -m 775 $^ $(tardir_prefix)$(wsdl_dir_alt)
 endif
 endif
 
@@ -383,8 +383,8 @@ endif
 ifneq ($(elmstd_dir),)
 ifneq ($(elmstd_files),)
 	@printf "$c---- Install element types std $< ----$e"
-	@izinstall -d $(chgrp_option) -m 775 $(tardir_prefix)$(elmstd_dir)
-	@izinstall $(chgrp_option) -m 775 $^ $(tardir_prefix)$(elmstd_dir)
+	@install -d $(chgrp_option) -m 775 $(tardir_prefix)$(elmstd_dir)
+	@install $(chgrp_option) -m 775 $^ $(tardir_prefix)$(elmstd_dir)
 	@echo "" >> $(tardir_prefix)$(INSTALLDIR)elm.sql
 	@chmod 666 $(tardir_prefix)$(INSTALLDIR)elm.sql
 	@chgrp -R $(chgrp_name) $(tardir_prefix)$(INSTALLDIR)elm.sql
@@ -396,8 +396,8 @@ elmstd_alt: $(elmstd_files)
 ifneq ($(elmstd_dir_alt),)
 ifneq ($(elmstd_files),)
 	@printf "$c---- Install element types std $< ----$e"
-	@izinstall -d $(chgrp_option) -m 775 $(tardir_prefix)$(elmstd_dir_alt)
-	@izinstall $(chgrp_option) -m 775 $^ $(tardir_prefix)$(elmstd_dir_alt)
+	@install -d $(chgrp_option) -m 775 $(tardir_prefix)$(elmstd_dir_alt)
+	@install $(chgrp_option) -m 775 $^ $(tardir_prefix)$(elmstd_dir_alt)
 endif
 endif
 
@@ -405,8 +405,8 @@ endif
 ifneq ($(elmxml_dir),)
 ifneq ($(elmxml_files),)
 	@printf "$c---- Install element types xml $< ----$e"
-	@izinstall -d $(chgrp_option) -m 775 $(tardir_prefix)$(elmxml_dir)
-	@izinstall $(chgrp_option) -m 775 $^ $(tardir_prefix)$(elmxml_dir)
+	@install -d $(chgrp_option) -m 775 $(tardir_prefix)$(elmxml_dir)
+	@install $(chgrp_option) -m 775 $^ $(tardir_prefix)$(elmxml_dir)
 endif
 endif
 
@@ -414,8 +414,8 @@ elmxml_alt: $(elmxml_files)
 ifneq ($(elmxml_dir_alt),)
 ifneq ($(elmxml_files),)
 	@printf "$c---- Install element types xml $< ----$e"
-	@izinstall -d $(chgrp_option) -m 775 $(tardir_prefix)$(elmxml_dir_alt)
-	@izinstall $(chgrp_option) -m 775 $^ $(tardir_prefix)$(elmxml_dir_alt)
+	@install -d $(chgrp_option) -m 775 $(tardir_prefix)$(elmxml_dir_alt)
+	@install $(chgrp_option) -m 775 $^ $(tardir_prefix)$(elmxml_dir_alt)
 endif
 endif
 
@@ -423,8 +423,8 @@ endif
 ifneq ($(elmimg_dir),)
 ifneq ($(elmimg_files),)
 	@printf "$c---- Install element types img $< ----$e"
-	@izinstall -d $(chgrp_option) -m 775 $(tardir_prefix)$(elmimg_dir)
-	@izinstall $(chgrp_option) -m 775 $^ $(tardir_prefix)$(elmimg_dir)
+	@install -d $(chgrp_option) -m 775 $(tardir_prefix)$(elmimg_dir)
+	@install $(chgrp_option) -m 775 $^ $(tardir_prefix)$(elmimg_dir)
 endif
 endif
 
@@ -432,8 +432,8 @@ elmimg_alt: $(elmimg_files)
 ifneq ($(elmimg_dir_alt),)
 ifneq ($(elmimg_files),)
 	@printf "$c---- Install element types img $< ----$e"
-	@izinstall -d $(chgrp_option) -m 775 $(tardir_prefix)$(elmimg_dir_alt)
-	@izinstall $(chgrp_option) -m 775 $^ $(tardir_prefix)$(elmimg_dir_alt)
+	@install -d $(chgrp_option) -m 775 $(tardir_prefix)$(elmimg_dir_alt)
+	@install $(chgrp_option) -m 775 $^ $(tardir_prefix)$(elmimg_dir_alt)
 endif
 endif
 
@@ -441,8 +441,8 @@ endif
 ifneq ($(elmdec_dir),)
 ifneq ($(elmdec_files),)
 	@printf "$c---- Install element types decursus $< ----$e"
-	@izinstall -d $(chgrp_option) -m 775 $(tardir_prefix)$(elmdec_dir)
-	@izinstall $(chgrp_option) -m 775 $^ $(tardir_prefix)$(elmdec_dir)
+	@install -d $(chgrp_option) -m 775 $(tardir_prefix)$(elmdec_dir)
+	@install $(chgrp_option) -m 775 $^ $(tardir_prefix)$(elmdec_dir)
 endif
 endif
 
@@ -450,8 +450,8 @@ elmdec_alt: $(elmdec_files)
 ifneq ($(elmdec_dir_alt),)
 ifneq ($(elmdec_files),)
 	@printf "$c---- Install element types decursus $< ----$e"
-	@izinstall -d $(chgrp_option) -m 775 $(tardir_prefix)$(elmdec_dir_alt)
-	@izinstall $(chgrp_option) -m 775 $^ $(tardir_prefix)$(elmdec_dir_alt)
+	@install -d $(chgrp_option) -m 775 $(tardir_prefix)$(elmdec_dir_alt)
+	@install $(chgrp_option) -m 775 $^ $(tardir_prefix)$(elmdec_dir_alt)
 endif
 endif
 
@@ -459,8 +459,8 @@ endif
 ifneq ($(elmshow_dir),)
 ifneq ($(elmshow_files),)
 	@printf "$c---- Install element types show $< ----$e"
-	@izinstall -d $(chgrp_option) -m 775 $(tardir_prefix)$(elmshow_dir)
-	@izinstall $(chgrp_option) -m 775 $^ $(tardir_prefix)$(elmshow_dir)
+	@install -d $(chgrp_option) -m 775 $(tardir_prefix)$(elmshow_dir)
+	@install $(chgrp_option) -m 775 $^ $(tardir_prefix)$(elmshow_dir)
 	@echo "" >> $(tardir_prefix)$(INSTALLDIR)elm.sql
 	@chmod 666 $(tardir_prefix)$(INSTALLDIR)elm.sql
 	@chgrp -R $(chgrp_name) $(tardir_prefix)$(INSTALLDIR)elm.sql
@@ -472,8 +472,8 @@ elmshow_alt: $(elmshow_files)
 ifneq ($(elmshow_dir_alt),)
 ifneq ($(elmshow_files),)
 	@printf "$c---- Install element types show $< ----$e"
-	@izinstall -d $(chgrp_option) -m 775 $(tardir_prefix)$(elmshow_dir_alt)
-	@izinstall $(chgrp_option) -m 775 $^ $(tardir_prefix)$(elmshow_dir_alt)
+	@install -d $(chgrp_option) -m 775 $(tardir_prefix)$(elmshow_dir_alt)
+	@install $(chgrp_option) -m 775 $^ $(tardir_prefix)$(elmshow_dir_alt)
 endif
 endif
 
@@ -849,4 +849,4 @@ pre_commit: $(headers) $(cfiles)
 
 %.ii:%.cpp
 	@printf "$c---- Preprocess $< ----$e"
-	$(CP) -o $@ -E $(HOST_SPECIFIC_DEFINE) $< $(INCLUDE)
+	$(CP) -D MOCK_RUN -o $@ -E $(HOST_SPECIFIC_DEFINE) $< $(INCLUDE)

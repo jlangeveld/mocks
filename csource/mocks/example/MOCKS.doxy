@@ -108,5 +108,5 @@ EXPAND_AS_DEFINED      =
 # function macros are typically used for boiler-plate code, and will confuse
 # the parser if not removed.
 
-SKIP_FUNCTION_MACROS   = YES
+SKIP_FUNCTION_MACROS   = NO
 CLASS_DIAGRAMS         = NO

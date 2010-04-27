@@ -39,8 +39,18 @@ XmlParser::XmlParser( const std::string& pFilename )
 
 // members
 
+std::string getTextFor( const std::string& pTagname )
+{
+	return this->getTextFor( pTagname, mCurrent );
+}
+
+std::string getTextFor( const std::string& pTagname, TiXmlElement* pElement )
+{
+	TiXmlElement *nameElem = pElement->FirstChildElement( pTagname );
+	return nameElem->GetText();
+}
+
 std::string XmlParser::findName( TiXmlElement* pElement )
 {
-	TiXmlElement *nameElem = pElement->FirstChildElement( "name" );
-	return nameElem->GetText();
+	return getTextFor( TAG_NAME, pElement );
 }

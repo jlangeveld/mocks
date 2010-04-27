@@ -26,7 +26,7 @@ using Loki::Printf;
 Structure::Structure( const std::string& pName )
 	: mName( erase_first_copy( pName, MOCK_OBJECT_PREFIX ) )
 {
-	Printf( "Created struct '%s'\n" ) ( mName );
+	Printf( "  Created struct '%s'\n" ) ( mName );
 }
 
 // members

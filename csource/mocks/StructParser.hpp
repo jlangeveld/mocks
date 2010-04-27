@@ -20,14 +20,17 @@ public:
 	bool findParent();
 	bool findMocker();
 
+	std::string getConst();
 	std::string getName();
 	std::string getRefID();
+	std::string getType();
 	std::string getVisibility();
 
 protected:
 private:
 	TiXmlElement* mCompoundDefElement;
 
+	bool currentIsMember();
 	TiXmlElement* findNextMocker( TiXmlElement* pCurrent );
 	TiXmlElement* findNextParent( TiXmlElement* element );
 

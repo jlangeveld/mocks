@@ -8,6 +8,10 @@
 
 #include "BasicOtherface.hpp"
 
+//#define MOCK Otherface
+#include <MyMock.hpp>
+
+#ifndef MOCK
 namespace mock_generator_settings
 {
 
@@ -16,5 +20,6 @@ struct MockOtherface
 {};
 
 }
+#endif
 
 #endif

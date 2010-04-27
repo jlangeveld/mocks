@@ -9,6 +9,10 @@
 #include "./interface/Interface.hpp"
 #include "./interface/Otherface.hpp"
 
+//#define MOCK Interface
+#include <MyMock.hpp>
+
+#ifndef MOCK
 namespace mock_generator_settings
 {
 
@@ -18,5 +22,6 @@ struct MockManyface
 {};
 
 }
+#endif
 
 #endif

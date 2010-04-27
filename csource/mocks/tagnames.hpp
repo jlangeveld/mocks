@@ -18,8 +18,10 @@ const std::string TAG_COMPOUND = "compound";
 const std::string TAG_COMPOUNDDEF = "compounddef";
 const std::string TAG_MEMBER = "memberdef";
 const std::string TAG_MOCK = "innerclass";
+const std::string TAG_NAME = "name";
 const std::string TAG_PARENT = "basecompoundref";
 const std::string TAG_SECTION = "sectiondef";
+const std::string TAG_TYPE = "type";
 
 const std::string ATTRIB_CONST = "const";
 const std::string ATTRIB_KIND = "kind";

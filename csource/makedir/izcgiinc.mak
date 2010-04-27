@@ -96,14 +96,14 @@ mocks_mkdir:
 
 mocks_doxy: mocks_clean mocks_mkdir
 	@echo "Generate dependencies for $(mock_files)"
-	$(CP) -D MOCK_RUN -M -MM $(mock_files) $(INCLUDE) | ../obj/mocks --link
+	$(CP) -D MOCK_RUN -M -MM $(mock_files) $(INCLUDE) | mocks --link
 
 mocks_xml:
 	@echo "-- mocks_xml"
 	doxygen MOCKS.doxy
 
 mocks_build:
-	../obj/mocks
+	mocks
 
 show_Basedir:
 	@printf "\n"

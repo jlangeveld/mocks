@@ -47,6 +47,12 @@ StructParser::~StructParser()
 
 // members
 
+bool StructParser::currentIsMember()
+{
+	const string tagname = mCurrent->Value();
+	return ( tagname == TAG_MEMBER );
+}
+
 bool StructParser::findMocker()
 {
 	mCurrent = this->findNextMocker( mCurrent );
@@ -81,14 +87,29 @@ bool StructParser::findParent()
 	return ( mCurrent != 0 );
 }
 
+std::string StructParser::getConst()
+{
+	const string constValue = mCurrent->Attribute( ATTRIB_CONST.c_str() );
+	return ( constValue == "yes" ? "const" : "" );
+}
+
 std::string StructParser::getName()
 {
+	if ( currentIsMember() )
+	{
+		return this->getTextFor( TAG_NAME );
+	}
 	return mCurrent->GetText();
 }
 
 std::string StructParser::getRefID()
 {
 	return mCurrent->Attribute( ATTRIB_REFID.c_str() );
+}
+
+std::string StructParser::getType()
+{
+	return this->getTextFor( TAG_TYPE );
 }
 
 std::string StructParser::getVisibility()

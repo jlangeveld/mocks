@@ -12,6 +12,7 @@
  ** Eerste versie.
  ***************/
 
+#include "tagnames.hpp"
 #include "XmlParser.hpp"
 
 #include <loki/SafeFormat.h>
@@ -39,12 +40,12 @@ XmlParser::XmlParser( const std::string& pFilename )
 
 // members
 
-std::string getTextFor( const std::string& pTagname )
+std::string XmlParser::getTextFor( const std::string& pTagname )
 {
 	return this->getTextFor( pTagname, mCurrent );
 }
 
-std::string getTextFor( const std::string& pTagname, TiXmlElement* pElement )
+std::string XmlParser::getTextFor( const std::string& pTagname, TiXmlElement* pElement )
 {
 	TiXmlElement *nameElem = pElement->FirstChildElement( pTagname );
 	return nameElem->GetText();

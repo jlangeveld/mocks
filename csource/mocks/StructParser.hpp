@@ -17,10 +17,13 @@ public:
 	StructParser( const std::string& pRefID );
 	~StructParser();
 
-	bool findParent();
 	bool findMocker();
+	bool findParameter();
+	bool findParent();
+	bool findSection();
 
 	std::string getConst();
+	std::string getKind();
 	std::string getName();
 	std::string getRefID();
 	std::string getType();
@@ -29,10 +32,15 @@ public:
 protected:
 private:
 	TiXmlElement* mCompoundDefElement;
+	TiXmlElement* mParamElement;
+	TiXmlElement* mSectionElement;
 
 	bool currentIsMember();
 	TiXmlElement* findNextMocker( TiXmlElement* pCurrent );
+	TiXmlElement* findNextParameter( TiXmlElement* element );
 	TiXmlElement* findNextParent( TiXmlElement* element );
+	TiXmlElement* findNextSection( TiXmlElement* element );
+	bool parsingParam();
 
 };
 

@@ -26,7 +26,7 @@ using Loki::Printf;
 Structure::Structure( const std::string& pName )
 	: mName( erase_first_copy( pName, MOCK_OBJECT_PREFIX ) )
 {
-	Printf( "  Created struct '%s'\n" ) ( mName );
+	Printf( "( Created struct '%s' )\n" ) ( mName );
 }
 
 // members
@@ -34,5 +34,5 @@ Structure::Structure( const std::string& pName )
 void Structure::addParent( const std::string& pName, const std::string& pRefID, const std::string& pVisibility )
 {
 	mParentRefIDs.push_back( Parent( pName, pRefID, pVisibility ) );
-	Printf( "  Added %s parent '%s' (refid '%s')\n" ) ( pVisibility ) ( pName ) ( pRefID );
+	Printf( "  - Added %s parent '%s' (refid '%s')\n" ) ( pVisibility ) ( pName ) ( pRefID );
 }

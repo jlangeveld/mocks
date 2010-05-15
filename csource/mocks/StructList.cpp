@@ -30,14 +30,17 @@ using std::string;
 
 void StructList::collectMockers( StructParser& sp, Structure& mock )
 {
- 	while ( sp.findMocker() )
- 	{
- 		Mocker theMocker( sp.getType(), sp.getName(), sp.getConst() );
-// 		while ( sp.findParameter() )
-// 		{
-// 			Mocker::Parameter param( sp.getType(), sp.getName() );
-// 		}
- 	}
+	while ( sp.findSection() )
+	{
+		while ( sp.findMocker() )
+		{
+			Mocker theMocker( sp.getType(), sp.getName(), sp.getConst() );
+			while ( sp.findParameter() )
+			{
+	 			theMocker.addParam( sp.getType(), sp.getName() );
+			}
+		}
+	}
 }
 
 void StructList::collectParents( StructParser& sp, Structure& mock )

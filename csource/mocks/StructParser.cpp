@@ -24,6 +24,18 @@ using Loki::Printf;
 using std::make_pair;
 using std::string;
 
+namespace
+{
+
+bool isStaticOrNonVirtual( TiXmlElement* pCurrent )
+{
+	return ( pCurrent &&
+		( *( pCurrent->Attribute( ATTRIB_STATIC ) ) == YES
+		|| *( pCurrent->Attribute( ATTRIB_VIRTUAL ) ) == VIRTUAL_NON ) );
+}
+
+}
+
 // *tors
 
 /**
@@ -35,6 +47,8 @@ using std::string;
 StructParser::StructParser( const std::string& pRefID )
 : XmlParser( XMLPATH + pRefID + ".xml" )
 , mCompoundDefElement( mDoc.RootElement()->FirstChildElement() )
+, mParamElement( 0 )
+, mSectionElement( 0 )
 {}
 
 /** Default destructor.
@@ -53,6 +67,11 @@ bool StructParser::currentIsMember()
 	return ( tagname == TAG_MEMBER );
 }
 
+bool StructParser::parsingParam()
+{
+	return ( mParamElement != 0 );
+}
+
 bool StructParser::findMocker()
 {
 	mCurrent = this->findNextMocker( mCurrent );
@@ -64,21 +83,38 @@ TiXmlElement* StructParser::findNextMocker( TiXmlElement* pCurrent )
 	do
 	{
 		pCurrent = ( pCurrent == 0
-			? mCompoundDefElement->FirstChildElement( TAG_MEMBER )
+			? mSectionElement->FirstChildElement( TAG_MEMBER )
 			: pCurrent->NextSiblingElement( TAG_MEMBER ) );
 	}
-	while ( pCurrent && ( *( pCurrent->Attribute( ATTRIB_STATIC ) ) == YES || *( pCurrent->Attribute( ATTRIB_VIRTUAL ) ) == VIRTUAL_NON ) );
+	while ( isStaticOrNonVirtual( pCurrent ) );
 	return pCurrent;
+}
+
+TiXmlElement* StructParser::findNextParameter( TiXmlElement* pCurrent )
+{
+	return ( pCurrent == 0
+		? mCurrent->FirstChildElement( TAG_PARAM )
+		: pCurrent->NextSiblingElement( TAG_PARAM ) );
 }
 
 TiXmlElement* StructParser::findNextParent( TiXmlElement* pCurrent )
 {
-	if ( pCurrent == 0 )
-	{
-		return mCompoundDefElement->FirstChildElement( TAG_PARENT );
-	}
+	return ( pCurrent == 0
+		? mCompoundDefElement->FirstChildElement( TAG_PARENT )
+		: pCurrent->NextSiblingElement( TAG_PARENT ) );
+}
 
-	return pCurrent->NextSiblingElement( TAG_PARENT );
+TiXmlElement* StructParser::findNextSection( TiXmlElement* pCurrent )
+{
+	return ( pCurrent == 0
+		? mCompoundDefElement->FirstChildElement( TAG_SECTION )
+		: pCurrent->NextSiblingElement( TAG_SECTION ) );
+}
+
+bool StructParser::findParameter()
+{
+	mParamElement = this->findNextParameter( mParamElement );
+	return ( mParamElement != 0 );
 }
 
 bool StructParser::findParent()
@@ -87,15 +123,32 @@ bool StructParser::findParent()
 	return ( mCurrent != 0 );
 }
 
+bool StructParser::findSection()
+{
+	mSectionElement = this->findNextSection( mSectionElement );
+	return ( mSectionElement != 0 );
+}
+
 std::string StructParser::getConst()
 {
 	const string constValue = mCurrent->Attribute( ATTRIB_CONST.c_str() );
 	return ( constValue == "yes" ? "const" : "" );
 }
 
+std::string StructParser::getKind()
+{
+	return ( mSectionElement == 0
+		? mCurrent->Attribute( ATTRIB_KIND.c_str() )
+		: mSectionElement->Attribute( ATTRIB_KIND.c_str() ) );
+}
+
 std::string StructParser::getName()
 {
-	if ( currentIsMember() )
+	if ( parsingParam() )
+	{
+		return this->getTextFor( TAG_PARAMNAME, mParamElement );
+	}
+	else if ( currentIsMember() )
 	{
 		return this->getTextFor( TAG_NAME );
 	}
@@ -109,6 +162,10 @@ std::string StructParser::getRefID()
 
 std::string StructParser::getType()
 {
+	if ( parsingParam() )
+	{
+		return this->getTextFor( TAG_TYPE, mParamElement );
+	}
 	return this->getTextFor( TAG_TYPE );
 }
 

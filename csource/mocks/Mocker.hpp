@@ -26,7 +26,7 @@ class Mocker
 
 
 public:
-	Mocker( const std::string& pType, const std::string& pName, const std::string& pConst );
+	Mocker( const std::string& pType, const std::string& pName, const std::string& pArgList, const std::string& pConst );
 
 	void addParam( const std::string& pType, const std::string& pName );
 
@@ -34,6 +34,7 @@ protected:
 private:
 	const std::string mType;
 	const std::string mName;
+	const std::string mArgList;
 	const std::string mConst;
 	std::vector< Mocker::Parameter > mParameters;
 

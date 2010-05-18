@@ -14,6 +14,7 @@ const std::string XMLPATH = "./.mocks_xml/";
 const std::string YES = "yes";
 const std::string NO = "no";
 
+const std::string TAG_ARGLIST = "argsstring";
 const std::string TAG_COMPOUND = "compound";
 const std::string TAG_COMPOUNDDEF = "compounddef";
 const std::string TAG_MEMBER = "memberdef";

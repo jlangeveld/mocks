@@ -22,7 +22,6 @@ public:
 	bool findParent();
 	bool findSection();
 
-	std::string getArgList();
 	std::string getConst();
 	std::string getKind();
 	std::string getName();

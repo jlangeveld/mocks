@@ -129,11 +129,6 @@ bool StructParser::findSection()
 	return ( mSectionElement != 0 );
 }
 
-std::string StructParser::getArgList()
-{
-	return this->getTextFor( TAG_ARGLIST );
-}
-
 std::string StructParser::getConst()
 {
 	const string constValue = mCurrent->Attribute( ATTRIB_CONST.c_str() );

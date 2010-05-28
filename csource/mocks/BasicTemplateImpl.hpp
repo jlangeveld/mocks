@@ -6,6 +6,7 @@
 #include "BasicTemplate.hpp"
 
 #include <string>
+#include <vector>
 
 #ifndef __BASICTEMPLATEIMPL_HPP__
 #define __BASICTEMPLATEIMPL_HPP__
@@ -28,6 +29,12 @@ public:
 
 private:
 	std::string mStr;
+
+	void appendLoopChunks( const std::vector< std::string >& pResults, std::vector< std::size_t >& pCurrentLoopChunk );
+	bool appendNoLoopChunk( const std::string& noLoopChunks, std::size_t& currentNoLoopChunk, std::size_t& prevNoLoopChunk );
+	void computeLoopChunks( const std::string& pMacro, std::string& pNoLoopChunks, std::string& pLoopChunks );
+
+
 };
 
 #endif

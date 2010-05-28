@@ -19,7 +19,7 @@ class StructParser;
 class StructList
 {
 public:
-	const Structure& getStructure( const std::string& pName );
+	Structure& getStructure( const std::string& pName );
 
 	void outputAllMockObjects();
 

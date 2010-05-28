@@ -99,6 +99,7 @@ void create_symlinks( const boost::program_options::variables_map& pVMap )
 }
 
 int main( int argc, char** argv )
+try
 {
 	options_description desc( "Allowed options" );
 	desc.add_options()
@@ -134,4 +135,14 @@ int main( int argc, char** argv )
 	allStructs.outputAllMockObjects();
 
 	return 0;
+}
+
+catch ( const std::runtime_error& pEx )
+{
+	Printf( "\n\n** RUNTIME EXCEPTION **\n%s\n\n" ) ( pEx.what() );
+}
+
+catch ( const std::exception& pEx )
+{
+	Printf( "\n\n** EXCEPTION **\n%s\n\n" ) ( pEx.what() );
 }

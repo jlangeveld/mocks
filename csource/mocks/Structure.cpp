@@ -55,11 +55,16 @@ void Structure::output()
 {
 	if ( mCurrentParent == mParentRefIDs.end() )
 	{	// Add mockpp::MockObject as a parent
-
+		mTpl->replace( "PARENT_NAME", "ChainableMockObject" );
 		return;
 	}
 
 	mCurrentParent->outputName( *mTpl );
+}
+
+void Structure::outputMockers( BasicTemplate& pTpl )
+{
+	HIER
 }
 
 void Structure::outputName( BasicTemplate& pTpl ) const
@@ -68,7 +73,9 @@ void Structure::outputName( BasicTemplate& pTpl ) const
 	pTpl.replace( "MOCKOBJECT_UPPER", to_upper_copy( mName ) );
 }
 
-void Structure::outputParents( BasicTemplate& pTpl ) const
+void Structure::outputParents( BasicTemplate& pTpl )
 {
 	mTpl = &pTpl;
+	mCurrentParent = mParentRefIDs.begin();
+	mTpl->replaceLoop( "PARENTS", *this );
 }

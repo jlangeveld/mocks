@@ -20,6 +20,7 @@ using std::vector;
 
 namespace
 {
+const char SEP = '\0';
 
 const std::string getMacroName( const std::string& pType, const std::string& pName )
 {
@@ -79,30 +80,93 @@ BasicTemplateImpl::BasicTemplateImpl( const std::string& pFilename )
 : mStr( read( pFilename ) )
 {}
 
-// Memberfunctions
+// members
 
-//void
-//BasicTemplateImpl::init( void )
-//{
-//	mStr = "";
-//	mStr.reserve( 1000 );
-//	_lmacro = "$";
-//	_rmacro = "$";
-//	_ifmacro = "IF";
-//	_elsemacro = "ELSE";
-//	_fimacro = "FI";
-//	_loopmacro = "LOOP";
-//	_loopenummacro = "ENUMLOOP";
-//	_poolenummacro = "ENUMPOOL";
-//	_enummacro = "ENUM";
-//	_loopvarmacro = "LVAR";
-//	_poolmacro = "POOL";
-//	_headermacro = "HEADER";
-//	_headervarmacro = "HVAR";
-//	_redaehmacro = "REDAEH";
-//	_filemacro = "FILE";
-//	_errormessage = "";
-//}
+void BasicTemplateImpl::appendLoopChunks( const std::vector< std::string >& pResults, std::vector< std::size_t >& pCurrentLoopChunk )
+{
+	for( size_t i = 0 ; i < pResults.size(); ++i )
+	{
+		const string& result = pResults.at( i );
+		size_t& currentLoopChunk = pCurrentLoopChunk.at( i );
+		const size_t nextChunk = result.find( SEP, currentLoopChunk );
+
+		string message;
+		message.append( result, currentLoopChunk, nextChunk - currentLoopChunk );
+		mStr.append( result, currentLoopChunk, nextChunk - currentLoopChunk );
+		currentLoopChunk = nextChunk + 1;
+	}
+}
+
+bool BasicTemplateImpl::appendNoLoopChunk( const std::string& noLoopChunks, std::size_t& currentNoLoopChunk, std::size_t& prevNoLoopChunk )
+{
+	currentNoLoopChunk = noLoopChunks.find( SEP, prevNoLoopChunk );
+	if ( currentNoLoopChunk == string::npos )
+	{
+		mStr.append( noLoopChunks, prevNoLoopChunk, string::npos );
+		return false;
+	}
+
+	size_t noLoopChunkSize = currentNoLoopChunk - prevNoLoopChunk;
+	string message;
+	message.append( noLoopChunks, prevNoLoopChunk, noLoopChunkSize );
+	mStr.append( noLoopChunks, prevNoLoopChunk, noLoopChunkSize );
+	prevNoLoopChunk = currentNoLoopChunk + 1;
+
+	return true;
+}
+
+void BasicTemplateImpl::computeLoopChunks( const std::string& pMacro, std::string& pNoLoopChunks, std::string& pLoopChunks )
+{
+	const std::string macroLoop = getMacroName( "LOOP", pMacro );
+	const std::string macroPool = getMacroName( "POOL", pMacro );
+
+	size_t posLoop = mStr.find( macroLoop );
+	if ( posLoop == string::npos )
+	{
+		return;
+	}
+
+	size_t begin, posPool;
+	size_t prevLoop = 0;
+	do
+	{
+		posPool = mStr.find( macroPool, posLoop );
+		if ( posPool == string::npos )
+		{
+			string message;
+			SPrintf( message, "Found '%s' at index %d, but found no matching '%s'." ) ( macroLoop ) ( posLoop ) ( macroPool );
+			throw std::runtime_error( message );
+		}
+
+		if ( !pNoLoopChunks.empty() )
+		{
+			pNoLoopChunks += SEP;
+		}
+		pNoLoopChunks.append( mStr, prevLoop, posLoop - prevLoop );
+
+		if ( !pLoopChunks.empty() )
+		{
+			pLoopChunks += SEP;
+		}
+		begin = posLoop + macroLoop.size();
+		pLoopChunks.append( mStr, begin, posPool - begin );
+
+		prevLoop = posPool + macroPool.size();
+		posLoop = mStr.find( macroLoop, posPool );
+	}
+	while ( posLoop != string::npos );
+
+	pNoLoopChunks += SEP;
+	begin = posPool + macroPool.size();
+	if ( begin != mStr.size() )
+	{
+		pNoLoopChunks.append( mStr, begin, mStr.size() - begin );
+	}
+	else
+	{
+		pNoLoopChunks.append( "" );
+	}
+}
 
 /*
 bool BasicTemplateImpl::replace( const std::map< std::string, std::string >& pMacro )
@@ -140,7 +204,7 @@ bool BasicTemplateImpl::replace( const std::map< std::string, std::string >& pMa
 bool BasicTemplateImpl::replace( const std::string& pMacro, const std::string& pReplacement )
 {
 	const string macro = getMacroName( pMacro );
-//	Printf( "### Replacing '%s' with '%s'.\n" ) ( macro ) ( pReplacement );
+//	Printf( " ### Replacing '%s' with '%s'.\n" ) ( macro ) ( pReplacement );
 
 	if ( mStr.find( macro ) == string::npos )
 	{
@@ -258,6 +322,36 @@ bool BasicTemplateImpl::replaceIf( const std::string& pMacro, bool pValue )
 
 void BasicTemplateImpl::replaceLoop( const string & pMacro, OutputLoopHandler& pHandler )
 {
+	if ( mStr.empty() )
+	{
+		return;
+	}
+
+	string noLoopChunks, loopChunks;
+	this->computeLoopChunks( pMacro, noLoopChunks, loopChunks );
+
+	vector< string > results;
+	do
+	{
+		mStr = loopChunks;
+		pHandler.output();
+		results.push_back( mStr );
+	}
+	while ( pHandler.next() );
+
+	size_t currentNoLoopChunk = 0, prevNoLoopChunk = 0;
+	vector< size_t > currentLoopChunk( results.size(), 0 );
+	mStr.clear();
+
+	while ( this->appendNoLoopChunk( noLoopChunks, currentNoLoopChunk, prevNoLoopChunk ) )
+	{
+		this->appendLoopChunks( results, currentLoopChunk );
+	}
+}
+
+#if 0
+void BasicTemplateImpl::replaceLoop( const string & pMacro, OutputLoopHandler& pHandler )
+{
 	string s, t;
 
 	const std::string macroloop = getMacroName( "LOOP", pMacro );
@@ -368,6 +462,7 @@ void BasicTemplateImpl::replaceLoop( const string & pMacro, OutputLoopHandler& p
 		i--;
 	}
 }
+#endif
 
 void BasicTemplateImpl::replaceFile( const std::string& pMacro, const std::string& pFilename )
 {

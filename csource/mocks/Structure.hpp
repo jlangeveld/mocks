@@ -24,8 +24,9 @@ public:
 	virtual bool next();
 	virtual void output();
 
+	void outputMockers( BasicTemplate& pTpl );
 	void outputName( BasicTemplate& pTpl ) const;
-	void outputParents( BasicTemplate& pTpl ) const;
+	void outputParents( BasicTemplate& pTpl );
 
 private:
 	typedef std::vector< Parent > ParentContainerType;
@@ -33,7 +34,7 @@ private:
 	const std::string mName;
 	ParentContainerType mParentRefIDs;
 
-	mutable BasicTemplate* mTpl;
+	BasicTemplate* mTpl;
 	ParentContainerType::const_iterator mCurrentParent;
 };
 

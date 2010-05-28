@@ -73,9 +73,9 @@ void StructList::collectParents( StructParser& sp, Structure& mock )
 	}
 }
 
-const Structure& StructList::getStructure( const std::string& pName )
+Structure& StructList::getStructure( const std::string& pName )
 {
-	MapType::const_iterator pos = parsedStructs.find( pName );
+	MapType::iterator pos = parsedStructs.find( pName );
 	if ( pos == parsedStructs.end() )
 	{
 		string message;
@@ -106,9 +106,10 @@ std::string StructList::outputMockObject( const std::string& pTpl, const std::st
 	BasicTemplateImpl tpl;
 	tpl.setStr( pTpl );
 
-	const Structure& mock = this->getStructure( pName );
+	Structure& mock = this->getStructure( pName );
 	mock.outputName( tpl );
 	mock.outputParents( tpl );
+	mock.outputMockers( tpl );
 
 	return tpl.str();
 }

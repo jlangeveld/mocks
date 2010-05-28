@@ -27,3 +27,10 @@ Parent::Parent( const std::string& pName, const std::string& pRefID, const std::
 , refID( pRefID )
 , visibility( pVisibility )
 {}
+
+// members
+
+void Parent::outputName( BasicTemplate& pTpl ) const
+{
+	pTpl.replace( "PARENT_NAME", this->name );
+}

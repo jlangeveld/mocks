@@ -41,7 +41,8 @@ endif
 # BOOST version
 ################################
 ifeq ("$(IZ_BOOST_VERSION)","")
-IZ_BOOST_VERSION=1_42_0
+#IZ_BOOST_VERSION=1_42_0
+IZ_BOOST_VERSION=1_43
 endif
 
 # alleen de gebruikte libs worden meegelinkt; er zijn er nog (veel) meer...

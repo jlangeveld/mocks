@@ -131,6 +131,7 @@ int main( int argc, char** argv )
 		allStructs.push( setp.mockName(), setp.mockRefID() );
 	}
 	allStructs.parseAll();
+	allStructs.outputAllMockObjects();
 
 	return 0;
 }

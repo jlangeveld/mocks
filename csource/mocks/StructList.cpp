@@ -12,19 +12,36 @@
  ** Eerste versie.
  ***************/
 
+#include "BasicTemplateImpl.hpp"
 #include "Mocker.hpp"
 #include "StructList.hpp"
 #include "StructParser.hpp"
 
+#include <fstream>
 #include <string>
+
+#include <boost/algorithm/string/replace.hpp>
+#include <boost/foreach.hpp>
 
 #include <loki/SafeFormat.h>
 
 using Loki::Printf;
-//using Loki::SPrintf;
+using Loki::SPrintf;
 
+using boost::replace_first_copy;
+using std::ofstream;
 using std::pair;
 using std::string;
+
+namespace
+{
+
+std::string stripGeneratorNamespace( const std::string& pName )
+{
+	return replace_first_copy( pName, "mock_generator_settings::", "" );
+}
+
+}
 
 // members
 
@@ -54,6 +71,46 @@ void StructList::collectParents( StructParser& sp, Structure& mock )
 		mock.addParent( name, refid, visibility );
 		infoList.push( make_pair( name, refid ) );
 	}
+}
+
+const Structure& StructList::getStructure( const std::string& pName )
+{
+	MapType::const_iterator pos = parsedStructs.find( pName );
+	if ( pos == parsedStructs.end() )
+	{
+		string message;
+		SPrintf( message, "[StructList] Internal error: Couldn't find structure '%s'." ) ( pName );
+		throw std::runtime_error( message );
+	}
+	return pos->second;
+}
+
+
+void StructList::outputAllMockObjects()
+{
+	BasicTemplateImpl tplObject( "/home/jeroenl/templates/mocks/MockObject.hpp.tpl" );
+	BOOST_FOREACH( string name, allMocks )
+	{
+		string filename;
+		SPrintf( filename, ".mocks/%s" ) ( stripGeneratorNamespace( name ) );
+		Printf( "Output '%s'.\n" ) ( filename );
+
+		ofstream file( filename.c_str() );
+		file << this->outputMockObject( tplObject.str(), name );
+		file.close();
+	}
+}
+
+std::string StructList::outputMockObject( const std::string& pTpl, const std::string& pName )
+{
+	BasicTemplateImpl tpl;
+	tpl.setStr( pTpl );
+
+	const Structure& mock = this->getStructure( pName );
+	mock.outputName( tpl );
+	mock.outputParents( tpl );
+
+	return tpl.str();
 }
 
 void StructList::parseAll()

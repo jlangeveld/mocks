@@ -41,6 +41,12 @@ void Structure::addParent( const std::string& pName, const std::string& pRefID, 
 	Printf( "  - Added %s parent '%s' (refid '%s')\n" ) ( pVisibility ) ( pName ) ( pRefID );
 }
 
+Mocker& Structure::createMocker( const std::string& pType, const std::string& pName, const std::string& pConst )
+{
+	mMockers.push_back( Mocker( pType, pName, pConst ) );
+	return mMockers.back();
+}
+
 bool Structure::next()
 {
 	if ( mCurrentParent == mParentRefIDs.end() )
@@ -64,7 +70,7 @@ void Structure::output()
 
 void Structure::outputMockers( BasicTemplate& pTpl )
 {
-	HIER
+//	HIER
 }
 
 void Structure::outputName( BasicTemplate& pTpl ) const

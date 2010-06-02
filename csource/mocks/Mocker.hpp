@@ -16,12 +16,15 @@
 
 class Mocker
 {
-	struct Parameter
+	class Parameter
 	{
-		std::string type;
-		std::string name;
-
+	public:
 		Parameter( const std::string& pType, const std::string& pName );
+
+	protected:
+	private:
+		std::string mType;
+		std::string mName;
 	};
 
 
@@ -32,9 +35,9 @@ public:
 
 protected:
 private:
-	const std::string mType;
-	const std::string mName;
-	const std::string mConst;
+	std::string mType;
+	std::string mName;
+	std::string mConst;
 	std::vector< Mocker::Parameter > mParameters;
 
 };

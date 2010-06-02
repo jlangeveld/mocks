@@ -7,6 +7,7 @@
 #define __STRUCTURE_HPP__
 
 #include "BasicTemplate.hpp"
+#include "Mocker.hpp"
 #include "Parent.hpp"
 
 #include <string>
@@ -20,6 +21,7 @@ public:
 	Structure( const std::string& pName );
 
 	void addParent( const std::string& pName, const std::string& pRefID, const std::string& pVisibility );
+	Mocker& createMocker( const std::string& pType, const std::string& pName, const std::string& pConst );
 
 	virtual bool next();
 	virtual void output();
@@ -30,9 +32,11 @@ public:
 
 private:
 	typedef std::vector< Parent > ParentContainerType;
+	typedef std::vector< Mocker > MockerContainerType;
 
 	const std::string mName;
 	ParentContainerType mParentRefIDs;
+	MockerContainerType mMockers;
 
 	BasicTemplate* mTpl;
 	ParentContainerType::const_iterator mCurrentParent;

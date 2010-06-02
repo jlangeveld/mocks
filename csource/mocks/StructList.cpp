@@ -51,7 +51,7 @@ void StructList::collectMockers( StructParser& sp, Structure& mock )
 	{
 		while ( sp.findMocker() )
 		{
-			Mocker theMocker( sp.getType(), sp.getName(), sp.getConst() );
+			Mocker& theMocker = mock.createMocker( sp.getType(), sp.getName(), sp.getConst() );
 			while ( sp.findParameter() )
 			{
 	 			theMocker.addParam( sp.getType(), sp.getName() );

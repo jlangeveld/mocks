@@ -39,13 +39,14 @@ Mocker::Mocker( const std::string& pType, const std::string& pName, const std::s
 }
 
 Mocker::Parameter::Parameter( const std::string& pType, const std::string& pName )
-: type( pType )
-, name( pName )
-{}
+: mType( pType )
+, mName( pName )
+{
+	Printf( "    - Added parameter '%s %s'\n" ) ( mType ) ( mName );
+}
 
 // members
 void Mocker::addParam( const std::string& pType, const std::string& pName )
 {
 	mParameters.push_back( Mocker::Parameter( pType, pName ) );
-	Printf( "    - Added parameter '%s %s'\n" ) ( mParameters.back().type ) ( mParameters.back().name );
 }

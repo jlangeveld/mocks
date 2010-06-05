@@ -17,6 +17,8 @@ class Structure
 : public OutputLoopHandler
 {
 public:
+	typedef std::vector< Parent > ParentContainerType;
+	typedef std::vector< Mocker > MockerContainerType;
 
 	Structure( const std::string& pName );
 

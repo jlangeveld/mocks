@@ -16,6 +16,7 @@
  ** Eerste versie.
  ***************/
 
+#include "BasicTemplateImpl.hpp"
 #include "Mocker.hpp"
 
 #include <loki/SafeFormat.h>
@@ -49,4 +50,19 @@ Mocker::Parameter::Parameter( const std::string& pType, const std::string& pName
 void Mocker::addParam( const std::string& pType, const std::string& pName )
 {
 	mParameters.push_back( Mocker::Parameter( pType, pName ) );
+}
+
+void Mocker::outputHeader( BasicTemplate& pTpl ) const
+{
+	BasicTemplateImpl tplHeader( "/home/jeroenl/templates/mocks/MockerHeader.tpl" );
+	tplHeader.replace( "TYPE", mType );
+	tplHeader.replace( "NAME", mName );
+	tplHeader.replace( "CONST", mConst );
+
+	pTpl.replace( "MOCKER_HEADER", tplHeader.str() );
+}
+
+void Mocker::outputImpl( BasicTemplate& pTpl ) const
+{
+
 }

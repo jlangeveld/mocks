@@ -37,7 +37,7 @@ Structure::Structure( const std::string& pName )
 
 void Structure::addParent( const std::string& pName, const std::string& pRefID, const std::string& pVisibility )
 {
-	mParentRefIDs.push_back( Parent( pName, pRefID, pVisibility ) );
+	mParentRefIDs.push_back( StructRef( pName, pRefID, pVisibility ) );
 	Printf( "  - Added %s parent '%s' (refid '%s')\n" ) ( pVisibility ) ( pName ) ( pRefID );
 }
 

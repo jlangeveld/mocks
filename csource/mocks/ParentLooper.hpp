@@ -7,7 +7,7 @@
 #define __PARENTLOOPER_HPP__
 
 #include "BasicTemplate.hpp"
-#include "Parent.hpp"
+#include "StructRef.hpp"
 
 #include <string>
 #include <vector>
@@ -15,7 +15,7 @@
 class ParentLooper
 : public OutputLoopHandler
 {
-	typedef std::vector< Parent > ParentContainerType;
+	typedef std::vector< StructRef > ParentContainerType;
 	typedef ParentContainerType::const_iterator ParentIteratorType;
 
 public:

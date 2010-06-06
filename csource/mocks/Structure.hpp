@@ -8,7 +8,7 @@
 
 #include "BasicTemplate.hpp"
 #include "Mocker.hpp"
-#include "Parent.hpp"
+#include "StructRef.hpp"
 
 #include <string>
 #include <vector>
@@ -16,7 +16,7 @@
 class Structure
 {
 public:
-	typedef std::vector< Parent > ParentContainerType;
+	typedef std::vector< StructRef > ParentContainerType;
 	typedef std::vector< Mocker > MockerContainerType;
 
 	Structure( const std::string& pName );

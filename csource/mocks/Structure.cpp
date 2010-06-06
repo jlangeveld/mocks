@@ -12,6 +12,7 @@
  ** Eerste versie.
  ***************/
 
+ #include "ParentLooper.hpp"
 #include "Structure.hpp"
 #include "tagnames.hpp"
 
@@ -27,7 +28,6 @@ using Loki::Printf;
 
 Structure::Structure( const std::string& pName )
 	: mName( erase_first_copy( pName, MOCK_OBJECT_PREFIX ) )
-	, mTpl( 0 )
 	, mCurrentParent( mParentRefIDs.end() )
 {
 	Printf( "( Created struct '%s' )\n" ) ( mName );
@@ -47,27 +47,6 @@ Mocker& Structure::createMocker( const std::string& pType, const std::string& pN
 	return mMockers.back();
 }
 
-bool Structure::next()
-{
-	if ( mCurrentParent == mParentRefIDs.end() )
-	{
-		return false;
-	}
-	++mCurrentParent;
-	return true;
-}
-
-void Structure::output()
-{
-	if ( mCurrentParent == mParentRefIDs.end() )
-	{	// Add mockpp::MockObject as a parent
-		mTpl->replace( "PARENT_NAME", "ChainableMockObject" );
-		return;
-	}
-
-	mCurrentParent->outputName( *mTpl );
-}
-
 void Structure::outputMockers( BasicTemplate& pTpl )
 {
 //	HIER
@@ -81,7 +60,6 @@ void Structure::outputName( BasicTemplate& pTpl ) const
 
 void Structure::outputParents( BasicTemplate& pTpl )
 {
-	mTpl = &pTpl;
-	mCurrentParent = mParentRefIDs.begin();
-	mTpl->replaceLoop( "PARENTS", *this );
+	ParentLooper looper( pTpl, mParentRefIDs );
+	pTpl.replaceLoop( "PARENTS", looper );
 }

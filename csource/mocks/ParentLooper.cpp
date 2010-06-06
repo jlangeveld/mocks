@@ -48,13 +48,11 @@ bool ParentLooper::next()
 	{
 		return false;
 	}
-	++mCurrent;
-	return true;
+	return ( ++mCurrent != mEnd );
 }
 
 void ParentLooper::output()
 {
-	Printf( "%s " ) ( __PRETTY_FUNCTION__ );
 	if ( mCurrent == mEnd )
 	{
 		return;

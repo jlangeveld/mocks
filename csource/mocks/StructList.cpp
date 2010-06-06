@@ -109,7 +109,7 @@ std::string StructList::outputMockObject( const std::string& pTpl, const std::st
 	Structure& mock = this->getStructure( pName );
 	mock.outputName( tpl );
 	mock.outputParents( tpl );
-	mock.outputMockers( tpl );
+//	mock.outputMockers( tpl );
 
 	return tpl.str();
 }

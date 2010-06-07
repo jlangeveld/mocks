@@ -14,6 +14,8 @@
 
 class ParentLooper
 : public OutputLoopHandler
+//class StructRefLooper_Name
+//: public StructRefLooper
 {
 	typedef std::vector< StructRef > ParentContainerType;
 	typedef ParentContainerType::const_iterator ParentIteratorType;

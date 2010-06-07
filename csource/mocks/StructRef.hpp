@@ -10,15 +10,25 @@
 
 #include <string>
 
-struct StructRef
+struct StructList;
+struct Structure;
+
+class StructRef
 {
-	std::string name;
-	std::string refID;
-	std::string visibility;
+public:
+	StructRef( const std::string& pName, const std::string& pRefID, const std::string& pVisibility = "" );
 
-	StructRef( const std::string& pName, const std::string& pRefID, const std::string& pVisibility );
-
+	std::string outputMockObject( const std::string& pTpl, StructList* pStructHolder ) const;
 	void outputName( BasicTemplate& pTpl ) const;
+	std::string stripGeneratorNamespace() const;
+
+protected:
+private:
+	std::string mName;
+	std::string mRefID;
+	std::string mVisibility;
+
+
 };
 
 #endif

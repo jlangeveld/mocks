@@ -6,6 +6,7 @@
 #ifndef __STRUCTLIST_HPP__
 #define __STRUCTLIST_HPP__
 
+#include "./StructRef.hpp"
 #include "./Structure.hpp"
 
 #include <map>
@@ -32,7 +33,7 @@ private:
 
 	MapType parsedStructs;
 	std::queue< InfoType > infoList;
-	std::vector< std::string > allMocks;
+	std::vector< StructRef > allMocks;
 
 	void collectMockers( StructParser& sp, Structure& mock );
 	void collectParents( StructParser& sp, Structure& mock );

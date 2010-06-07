@@ -20,7 +20,6 @@
 #include <fstream>
 #include <string>
 
-#include <boost/algorithm/string/replace.hpp>
 #include <boost/foreach.hpp>
 
 #include <loki/SafeFormat.h>
@@ -28,20 +27,9 @@
 using Loki::Printf;
 using Loki::SPrintf;
 
-using boost::replace_first_copy;
 using std::ofstream;
 using std::pair;
 using std::string;
-
-namespace
-{
-
-std::string stripGeneratorNamespace( const std::string& pName )
-{
-	return replace_first_copy( pName, "mock_generator_settings::", "" );
-}
-
-}
 
 // members
 
@@ -89,29 +77,16 @@ Structure& StructList::getStructure( const std::string& pName )
 void StructList::outputAllMockObjects()
 {
 	BasicTemplateImpl tplObject( "/home/jeroenl/templates/mocks/MockObject.hpp.tpl" );
-	BOOST_FOREACH( string name, allMocks )
+	BOOST_FOREACH( const StructRef& ref, allMocks )
 	{
 		string filename;
-		SPrintf( filename, ".mocks/%s" ) ( stripGeneratorNamespace( name ) );
+		SPrintf( filename, ".mocks/%s" ) ( ref.stripGeneratorNamespace() );
 		Printf( "Output '%s'.\n" ) ( filename );
 
 		ofstream file( filename.c_str() );
-		file << this->outputMockObject( tplObject.str(), name );
+		file << ref.outputMockObject( tplObject.str(), this );
 		file.close();
 	}
-}
-
-std::string StructList::outputMockObject( const std::string& pTpl, const std::string& pName )
-{
-	BasicTemplateImpl tpl;
-	tpl.setStr( pTpl );
-
-	Structure& mock = this->getStructure( pName );
-	mock.outputName( tpl );
-	mock.outputParents( tpl );
-//	mock.outputMockers( tpl );
-
-	return tpl.str();
 }
 
 void StructList::parseAll()
@@ -138,7 +113,9 @@ void StructList::parseStruct( const StructList::InfoType& pStructInfo )
 
 void StructList::push( const std::string& pMockName, const std::string& pRefID )
 {
-	allMocks.push_back( pMockName );
+	StructRef newRef( pMockName, pRefID );
+	allMocks.push_back( newRef );
+//	infoList.push( newRef );
 	infoList.push( make_pair( pMockName, pRefID ) );
 }
 
